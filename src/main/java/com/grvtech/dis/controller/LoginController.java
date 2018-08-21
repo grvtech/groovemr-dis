@@ -3,7 +3,10 @@ package com.grvtech.dis.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.grvtech.dis.model.User;
 
 @RestController
 public class LoginController {
@@ -11,14 +14,12 @@ public class LoginController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public ModelAndView index() {
 
-		// RestTemplate restTemplate = new RestTemplate();
-		// User user = restTemplate.getForObject("http://localhost:8080/login",
-		// User.class);
+		RestTemplate restTemplate = new RestTemplate();
+		User user = restTemplate.getForObject("http://localhost:8080/user/2", User.class);
 
 		ModelAndView modelAndView = new ModelAndView();
-		// modelAndView.addObject("username", user.getUsername());
-		// modelAndView.addObject("password", user.getPassword());
 		modelAndView.setViewName("index");
+		modelAndView.addObject(user);
 		return modelAndView;
 	}
 
