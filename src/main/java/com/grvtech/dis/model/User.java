@@ -167,4 +167,17 @@ public class User {
 		this.securityimage = securityimage;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("User [username=%s, password=%s]", username, password);
+	}
+
+	public boolean isEmpty() {
+		boolean result = true;
+		if (this.username != null && this.password != null) {
+			result = false;
+		}
+		return result;
+	}
+
 }
