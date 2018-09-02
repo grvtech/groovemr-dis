@@ -1,6 +1,8 @@
 package com.grvtech.dis.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public User getUserById(int userId) {
-		User user = repository.findById(userId);k
+		User user = repository.findById(userId);
 		if (user.isEmpty()) {
 			// not in memory - go get it
 			System.out.println("-----------------------------------------");
@@ -30,8 +32,12 @@ public class UserService implements IUserService {
 			System.out.println("-----------------------------------------");
 			RestTemplate restTemplate = new RestTemplate();
 			//user = restTemplate.getForObject("http://localhost:8080/user/gu" + userId, User.class);
+			Map<String, String> vars = new HashMap<>();
+			vars.put("userid", Integer.toString(userId));
+			//this should be a MessageRequest object
 			
-			user = restTemplate.postForObject("http://localhost:8080/user/gu", , User.class);
+			
+			user = restTemplate.postForObject("http://localhost:8080/user/gu",null , User.class, vars);
 			
 			if (user.isEmpty()) {
 				user = new User();
@@ -49,7 +55,7 @@ public class UserService implements IUserService {
 			System.out.println("The user is NOT in memory db go fetch it from server");
 			System.out.println("-----------------------------------------");
 			RestTemplate restTemplate = new RestTemplate();
-			user = restTemplate.getForObject("http://localhost:8080/user/gu" + userId, User.class);
+			user = restTemplate.getForObject("http://localhost:8080/user/gu", User.class);
 			if (user.isEmpty()) {
 				user = new User();
 			}
