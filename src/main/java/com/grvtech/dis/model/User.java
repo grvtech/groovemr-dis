@@ -12,9 +12,10 @@ public class User {
 	private String pin;
 	private String logo;
 	private String securityimage;
+	private String authmethod;   /* 0= userpassword, 1- userpi, 2=userimage, 3=emailpassword, 4 emailpin,  5 emailimage, 6 pin, 7 image */
 
 	public User(int iduser, UUID uuiduser, UUID uuidperson, String username, String password, String email, String pin,
-			String logo, String securityimage) {
+			String logo, String securityimage,String authmetod) {
 		super();
 		this.iduser = iduser;
 		this.uuiduser = uuiduser;
@@ -25,6 +26,7 @@ public class User {
 		this.pin = pin;
 		this.logo = logo;
 		this.securityimage = securityimage;
+		this.authmethod = authmetod;
 	}
 
 	public User() {
@@ -165,6 +167,17 @@ public class User {
 	 */
 	public void setSecurityimage(String securityimage) {
 		this.securityimage = securityimage;
+	}
+
+	
+	
+	
+	public String getAuthmethod() {
+		return authmethod;
+	}
+
+	public void setAuthmethod(String authmethod) {
+		this.authmethod = authmethod;
 	}
 
 	@Override

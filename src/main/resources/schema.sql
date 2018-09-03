@@ -8,6 +8,7 @@ create table user
    logo varchar(255) ,
    pin varchar(255) ,
    securityimage blob ,
+   authmetod varchar(255),
    primary key(iduser)
 );
 
