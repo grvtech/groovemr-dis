@@ -1,15 +1,76 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
 	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.1.3/css/bootstrap.min.css" />
 	<div th:replace="common/header :: header-css"/>
+	
 </head>
-
 <body>
-	<div th:replace="common/header :: header"/>
-<p class="test">index page</p>
-<p class="test1"></p>
 
+<style>
+
+@media screen and (max-width: 1024px) {body{font-size: 8px;}}
+@media screen and (min-width: 1025px) and (max-width: 1224px ) {body{font-size: 18px;}}
+@media screen and (min-width:1225px) and (max-width: 1424px) {body{font-size: 28px;}}
+	.wrap{
+		position:absolute;
+		left:0px;
+		top:0px;
+		height:100%;
+		width:100%;
+		margin:0;
+		background-color:#aaffbb;
+		min-width:1024px;
+		min-height:768px;
+		
+	}
+	
+	.one{background-color:#00f0f0;min-width:400px;
+		}
+	.two{background-color:#aaf0f0;
+		display: flex;flex-wrap: wrap;align-content:center;justify-content:center;min-width:600px;
+		}
+	.three{background-color:#77ccf0;}
+	
+	.wrap .row{height:100%;background-color:#77ccaa;}
+	.mycontainer1{margin:auto;width:90%;height:200px;display:block;background-color:#7700aa;
+		
+	}
+	.mycontainer2{margin:auto;width:90%;height:400px;display:block;background-color:#7700aa;}
+	.mycontainer3{margin:auto;width:90%;height:70px;display:block;background-color:#ff00aa;}
+	
+</style>
+
+
+	<!-- <div th:replace="common/header :: header"/>  -->
+	<div class="wrap d-flex">
+		<div class="container-fluid">
+  			<div class="row">
+			    <div class="col-sm one d-flex flex-wrap align-content-center">
+			    	<div class="mycontainer3">
+			    		aaaaaaaaaaaaaaaaaaaaa
+			    	</div>
+			    	<div class="mycontainer1">
+			    		aaaaaaaaaaaaaaaaaaaaa
+			    	</div>
+			    </div>
+			    <div class="col-sm two">
+			    <div class="mycontainer2">
+			    	
+			    		aaaaaaaaaaaaaaaaaaaaa
+			    	</div>
+			    </div>
+			    <div class="col-sm three">column 3</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	
+<!-- 
+<p class="test1"></p>
 <div th:text="${user.uuidperson}"></div>
 
 
@@ -37,14 +98,15 @@
             <button id="btn-signup" type="submit" class="button">Login</button>
         </footer>
     </form>
-
+ -->
 
 
 <script>
 
-test();
 </script>
 
+
+<div th:replace="common/header :: footer-js"/>
 </body>
 
 
