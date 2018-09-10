@@ -11,9 +11,10 @@
 
 <style>
 
-@media screen and (max-width: 1024px) {body{font-size: 8px;}}
+@media screen and (max-width: 1024px) {body{font-size: 16px;}}
 @media screen and (min-width: 1025px) and (max-width: 1224px ) {body{font-size: 18px;}}
-@media screen and (min-width:1225px) and (max-width: 1424px) {body{font-size: 28px;}}
+@media screen and (min-width:1225px) and (max-width: 1424px) {body{font-size: 22px;}}
+@media screen and (min-width:1425px) {body{font-size: 25px;}}
 	.wrap{
 		position:absolute;
 		left:0px;
@@ -23,16 +24,14 @@
 		margin:0;
 		background-color:#aaffbb;
 		min-width:1024px;
-		min-height:768px;
+		min-height:700px;
 		
 	}
-	
-	.one{background-color:#00f0f0;min-width:400px;
+	.one{background-color:#00f0f0;min-width:350px; max-width:500px;
 		}
-	.two{background-color:#aaf0f0;
-		display: flex;flex-wrap: wrap;align-content:center;justify-content:center;min-width:600px;
+	.two{background-color:#aaf0f0;min-width:550px;
 		}
-	.three{background-color:#77ccf0;}
+	.three{background-color:#77ccf0;max-width:100px;}
 	
 	.wrap .row{height:100%;background-color:#77ccaa;}
 	.mycontainer1{margin:auto;width:90%;height:200px;display:block;background-color:#7700aa;
@@ -40,7 +39,9 @@
 	}
 	.mycontainer2{margin:auto;width:90%;height:400px;display:block;background-color:#7700aa;}
 	.mycontainer3{margin:auto;width:90%;height:70px;display:block;background-color:#ff00aa;}
+	.message{margin:10px;background-color:#cdcdcd;display:block; width:auto;height:60px;}
 	
+	.grv{position:fixed;right:10px;bottom:10px;width:50px;height:50px;background-color:red;}
 </style>
 
 
@@ -56,18 +57,27 @@
 			    		aaaaaaaaaaaaaaaaaaaaa
 			    	</div>
 			    </div>
-			    <div class="col-sm two">
+			    <div class="col-sm two d-flex flex-wrap align-content-center">
 			    <div class="mycontainer2">
+			    	<div class="message">aaaaaaaaaaaaaaaaaaaaa</div>
+			    	<div class="message">aaaaaaaaaaaaaaaaaaaaa</div>
+			    	<div class="message">aaaaaaaaaaaaaaaaaaaaa</div>
 			    	
-			    		aaaaaaaaaaaaaaaaaaaaa
+			    	
+			    	
 			    	</div>
 			    </div>
-			    <div class="col-sm three">column 3</div>
+			    <div class="col-sm three">&nbsp;</div>
 			</div>
 			
 		</div>
+		
+		
+		<div class="grv">made by grv</div>
 	</div>
 	
+	
+
 	
 <!-- 
 <p class="test1"></p>
@@ -102,6 +112,7 @@
 
 
 <script>
+
 
 </script>
 
