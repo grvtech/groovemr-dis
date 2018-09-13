@@ -207,7 +207,7 @@ nav ul .active {
 
 
 .search-result-container{
-	display:block;
+	display:none;
 	width:100%;
 	height:280px;
 	overflow:auto;

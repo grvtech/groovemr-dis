@@ -3,6 +3,7 @@
 <head>
 	<script type="text/javascript" src="js/index.js"></script>
 	<link rel="stylesheet" href="css/grvdis.css">
+	<link rel="stylesheet" href="webjars/jqplot/1.0.8r1250/jquery.jqplot.min.css">
 	<div th:replace="common/header :: header-css"/>
 </head>
 <body>
@@ -146,7 +147,10 @@
 			
 			<section class="stats">
 				<div class="stats-container">
-					<article class="statsitem">stats1</article>
+					<article class="statsitem">
+						<div class="header">stats1</div>
+						<div id="chart2" style="width:400px;height:500px;"></div>
+					</article>
 					<article class="statsitem">stats2</article>
 					<!-- <article class="statsitem">stats3</article> --> 
 				</div>
@@ -193,13 +197,15 @@
  -->
 
 
-<script>
 
+<div th:replace="common/header :: footer-js"/>
+
+<script>
 
 </script>
 
 
-<div th:replace="common/header :: footer-js"/>
+
 </body>
 
 
