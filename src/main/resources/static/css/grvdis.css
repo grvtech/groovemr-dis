@@ -1,7 +1,7 @@
 
-.body {
+body {
 
-color:#000000;background-color:#f1fccf;}
+color:#000000;background-color:#f9f9f9;}
 
 .wrap{
 	position:absolute;
@@ -45,7 +45,11 @@ section.vspacer{width:auto;margin:5px 0px 5px 0px;}
 
 /* LAYOUT EXTERNAL ELEMENTS*/
 .grv{position:fixed;right:10px;bottom:10px;width:50px;height:50px;background-color:red;}
-.logo{position:fixed;top:10px;left:10px;width:150px;height:70px;background-color:green;}
+.logo{position:fixed;top:10px;left:10px;width:150px;height:70px;
+	color: white;
+    text-shadow: 2px 2px 4px #000000;
+    font-size:290%;
+}
 
 
 
@@ -55,7 +59,7 @@ nav ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #fff;
+    /*background-color: #fff;*/
 }
 
 nav ul li {
@@ -107,9 +111,9 @@ nav ul .active {
 	line-height:25px;
 	text-align:center;
 	padding:5px;
-	border-bottom:1px solid #efef00;
-	border-top:1px solid #efef00;
-	border-right:1px solid #efef00;
+	border-bottom:1px solid #4d4d4d;
+	border-top:1px solid #4d4d4d;
+	border-right:1px solid #4d4d4d;
 	border-radius: 0px 5px 5px 0px; 
 	background-color:#cdcdcd;
 	cursor:pointer;
@@ -118,13 +122,13 @@ nav ul .active {
 	background-color:#4d4d4d;
 }
 
-
+.criteria-container{z-index: 10;}
 .criteria-container .label{
 	padding:5px;
 	height:25px;
-	border-bottom:1px solid #efef00;
-	border-top:1px solid #efef00;
-	border-left:1px solid #efef00;
+	border-bottom:1px solid #4d4d4d;
+	border-top:1px solid #4d4d4d;
+	border-left:1px solid #4d4d4d;
 	border-radius: 5px 0px 0px 5px; 
 	background-color:#cdcdcd;
 	line-height:25px;
@@ -149,12 +153,14 @@ nav ul .active {
     border-left:1px solid #efefef;
     border-right:1px solid #efefef;
     border-top:1px solid #efefef;
+    
+
 }
 .criteria-container ul li{
 	padding:5px;
 	height:25px;
 	line-height:25px;
-	border-bottom:1px solid #efef00;
+	border-bottom:1px solid #4d4d4d;
 	cursor:pointer;
 }
 .criteria-container ul li:hover{
@@ -163,9 +169,9 @@ nav ul .active {
 
 .search-container .input-container{
 	padding:5px;
-	border-top:1px solid #efef00 !important;
-	border-bottom:1px solid #efef00 !important;
-	border-right:1px solid #efef00 !important;
+	border-top:1px solid #4d4d4d !important;
+	border-bottom:1px solid #4d4d4d !important;
+	border-right:1px solid #4d4d4d !important;
 	border-left:none;
 	background-color:#ffffff;
 }
