@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<script type="text/javascript" src="js/index.js"></script>
+	<link rel="stylesheet" href="css/grvdis.css">
+	<div th:replace="common/header :: header-css"/>
+</head>
+<body>
+
+
+	<div class="wrap">
+		<div class="coloana">coloana 1</div>
+		<div class="main">
+			<nav>
+				<ul>
+				  <li class="active"><a href="default.asp">Home</a></li>
+				  <li><a href="news.asp">News</a></li>
+				  <li><a href="contact.asp">Contact</a></li>
+				  <li><a href="about.asp">About</a></li>
+				</ul>
+			</nav>
+			<!-- section is always full width -->
+			<section class="vspacer"></section>
+			<section class="search">
+				<div class="search-title-container">
+					<text>Search Patient</text>
+				</div>
+				<div class="search-container">
+					<div class="item criteria-container">
+						<ul class="list">
+							<li>Criteria 1</li>
+							<li>Criteria 2</li>
+							<li>Criteria 3</li>
+							<li>Criteria 4</li>
+						</ul>
+					</div>
+					<div class="item input-container">
+						<input type="text" name="search-input" id="search-input" placeholder="Search patient" >
+					</div>
+					<div class="item button-container">
+						<button>Search</button>
+					</div>
+				</div>
+				<div class="search-result-container"></div>
+			</section>
+			
+			
+					
+		</div>
+		<div class="coloana">coloana 3</div>
+		
+		<div class="grv">made by grv</div>
+		<div class="logo">DIS LOGO</div>
+	</div>
+
+<!-- 
+<p class="test1"></p>
+<div th:text="${user.uuidperson}"></div>
+
+
+<form autocomplete="off" th:action="@{/login}"  method="post" role="form" class="sky-form" enctype="utf8">
+        <header>Registration form</header>
+        <fieldset>
+            <section>
+                <label class="input">
+                    <i class="icon-append icon-user"></i>
+                    <input  type="text" placeholder="username" id="username" name="username"/>
+                    <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
+                </label>
+            </section>
+            
+            <section>
+                <label class="input">
+                    <i class="icon-append icon-user"></i>
+                    <input type="password" placeholder="password" id="password" name="password"/>
+                    <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
+                </label>
+            </section>
+            
+        </fieldset>
+        <footer>
+            <button id="btn-signup" type="submit" class="button">Login</button>
+        </footer>
+    </form>
+ -->
+
+
+<script>
+
+
+</script>
+
+
+<div th:replace="common/header :: footer-js"/>
+</body>
+
+
+</html>
