@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<script type="text/javascript" src="js/index.js"></script>
+	
 	<link rel="stylesheet" href="css/grvdis.css">
 	<link rel="stylesheet" href="webjars/jqplot/1.0.8r1250/jquery.jqplot.min.css">
 	<div th:replace="common/header :: header-css"/>
+	<script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
 
@@ -149,9 +150,12 @@
 				<div class="stats-container">
 					<article class="statsitem">
 						<div class="header">stats1</div>
-						<div id="chart2" style="width:400px;height:500px;"></div>
+						<div id="chart2" style="width:90%;height:200px;margin:0 auto;"></div>
 					</article>
-					<article class="statsitem">stats2</article>
+					<article class="statsitem">
+						<div class="header">stats2</div>
+						<div id="chart1" style="width:90%;height:300px;margin:0 auto;"></div>
+					</article>
 					<!-- <article class="statsitem">stats3</article> --> 
 				</div>
 			
