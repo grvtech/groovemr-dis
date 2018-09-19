@@ -2,14 +2,17 @@ var langFileLoaded = false;
 var languageObject = null;
 var pageLanguage = $('html').attr('lang');
 
+
+function deployLanguage(){
+	$('div[grv]').text(function(){return eval('languageObject.'+$(this).attr('i18n'))});
+}
+
 function loadLanguage(lang = pageLanguage){
 	var jqxhr = $.getJSON( "lang/lang_"+lang+".json", function(lang) {
 		languageObject = lang;
 		console.log( "success load lang file" );
 		console.log(languageObject);
 		console.log($('div[grv-button]').attr('i18n'));
-		
-		$('div[grv-button]').text(function(){return eval('languageObject.'+$(this).attr('id'))});
 	})
 	  .done(function() {
 	    console.log( "second success" );
@@ -29,7 +32,8 @@ function getTag(tag,lang='en'){
 		return eval('languageObject'+tag);
 	}else{
 		setPageLanguage();
-		loadLanguage()
+		loadLanguage();
+		return eval('languageObject'+tag);
 	}
 }
 
@@ -41,6 +45,8 @@ function setPageLanguage(lang){
 function getPageLanguage(){
 	pageLanguage = $('html').attr('lang');
 }
+
+deployLanguage();
 
 
 /*
