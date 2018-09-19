@@ -1,7 +1,7 @@
 
 body {
 
-color:#000000;background-color:#f9f9f9;}
+color:#000000;background-color:#ffffff;margin:0;}
 
 .wrap{
 	position:absolute;
@@ -28,19 +28,6 @@ section.vspacer{width:auto;margin:5px 0px 5px 0px;}
 @media screen and (min-width:1225px) and (max-width: 1424px) {body{font: 400 13px Arial !important;}}
 @media screen and (min-width:1425px) {body{font: 400 13px Arial !important;}}
 
-
-
-.one{background-color:#00f0f0;max-width:100px;}
-.two{background-color:#aaf0f0;min-width:800px;}
-.three{background-color:#77ccf0;max-width:100px;}
-
-
-.menu{background-color:#1100aa;height:50px;margin-top:5px;}
-.menuitem{border:1px solid #000000;}
-.mycontainer1{margin:auto;width:90%;height:200px;display:block;background-color:#7700aa;}
-.mycontainer2{margin:auto;width:90%;height:400px;display:block;background-color:#7700aa;}
-.mycontainer3{margin:auto;width:90%;height:70px;display:block;background-color:#ff00aa;}
-.message{margin:10px;background-color:#cdcdcd;display:block; width:auto;height:80px;}
 
 
 /* LAYOUT EXTERNAL ELEMENTS*/
@@ -249,8 +236,75 @@ nav ul .active {
 .statsitem{
 	flex:1 0;
 	margin:7px;
+	border:1px solid #cdcdcd;
 	background-color:#efefef;
 	-webkit-box-shadow: 6px 7px 21px -4px rgba(92,88,92,0.82);
 	-moz-box-shadow: 6px 7px 21px -4px rgba(92,88,92,0.82);
 	box-shadow: 6px 7px 21px -4px rgba(92,88,92,0.82);
 }
+
+/*MESSAGES*/
+
+.messages{
+	border:1px solid #cdcdcd;
+	background-color:#efefef;
+	-webkit-box-shadow: 6px 7px 21px -4px rgba(92,88,92,0.82);
+	-moz-box-shadow: 6px 7px 21px -4px rgba(92,88,92,0.82);
+	box-shadow: 6px 7px 21px -4px rgba(92,88,92,0.82);
+	
+}
+
+.messages-container{
+	width:99%;
+	margin:0 auto;
+	max-height:200px;
+	overflow:auto;
+}
+
+.messages-container .header{
+	background-color:red;
+	position:sticky;
+	top:0px;
+}
+.messages-container .message{margin:0px;}
+
+.messages-container .message:hover{background-color:#cdcdcd;}
+.messages-container .message .message-toolbar{
+	height:30px;
+	border:1px solid #000000;
+	display:flex;
+	flex-direction:row;
+	flex-wrap:nowrap;
+	justify-content: flex-start;
+	padding:3px;
+
+}
+
+.messages-container .message .message-body{
+	display:none;
+}
+
+
+.messages-container .message .message-toolbar div{
+	flex:1 0;
+	line-height:30px;
+}
+
+.messages-container .message .message-toolbar div.message-delete{
+	display:none;
+	max-width:100px;
+	text-align:right;
+	border:1px solid red;
+}
+
+.messages-container .message .message-toolbar div.date{
+	max-width:100px;
+	text-align:right;
+	border:1px solid red;
+}
+.messages-container .message .message-toolbar div.status{
+	max-width:50px;
+	text-align:right;
+	border:1px solid red;
+}
+

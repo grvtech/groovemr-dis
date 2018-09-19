@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
 	
 	<link rel="stylesheet" href="css/grvdis.css">
@@ -21,9 +21,8 @@
 				  <li><a href="about.asp">About</a></li>
 				</ul>
 			</nav>
-			<!-- section is always full width -->
-			<section class="vspacer"></section>
-			<section class="vspacer"></section>
+			<!-- section is always full width 
+			<section class="vspacer"></section>-->
 			<section class="search">
 				<div class="search-title-container">
 					<text>Search Patient</text>
@@ -91,7 +90,6 @@
 						    <td>Brown</td>
 						    <td>$250</td>
 						</tr>
-						
 						  <tr>
 						    <td>Peter</td>
 						    <td>Griffin</td>
@@ -146,6 +144,17 @@
 			
 			<section class="vspacer"></section>
 			
+			
+			<section class="messages">
+				<div class="messages-container">
+					<div class="header">aaaaa
+						<div grv-button i18n='button1'></div>
+						<div grv-button i18n='button2'></div>
+						<div grv-list></div>
+					</div>
+				</div>
+			</section>
+			<section class="vspacer"></section>
 			<section class="stats">
 				<div class="stats-container">
 					<article class="statsitem">
@@ -205,6 +214,19 @@
 <div th:replace="common/header :: footer-js"/>
 
 <script>
+
+var ob = {fullname:"Radu Gabor",status:"New",date:"2019-09-18",text:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."};
+var obarr = [{fullname:"Radu 1 Gabor",status:"New",date:"2019-09-18",text:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."},{fullname:"Radu 2 Gabor",status:"New",date:"2019-09-18",text:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."},{fullname:"Radu 3 Gabor",status:"New",date:"2019-09-18",text:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."}]
+
+for(var i=0;i<obarr.length;i++){
+	var tt = new Message('messages-container',obarr[i]);	
+}
+
+
+
+
+
+//$('div[grv-button]').text(eval('languageObject.'+this.attr('id'))));
 
 </script>
 
