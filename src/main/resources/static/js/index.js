@@ -4,6 +4,7 @@ var pageLanguage = $('html').attr('lang');
 
 
 function deployLanguage(){
+	if(languageObject )
 	$('div[grv]').text(function(){return eval('languageObject.'+$(this).attr('i18n'))});
 }
 
