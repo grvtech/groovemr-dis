@@ -1,40 +1,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <div th:fragment="header-css">
-        <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
-        <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
-        <script src="webjars/jqplot/1.0.8r1250/jquery.jqplot.min.js"></script>
-        <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.canvasOverlay.js"></script>
-        <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.canvasTextRenderer.min.js"></script>
-        <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
-        <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.dateAxisRenderer.min.js"></script>
-        <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.pieRenderer.js"></script>
-        
-        
-    </div>
+
+
+<head th:fragment="common-header-css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+    <link rel="stylesheet" href="webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script th:href="@{/js/common/define.js}" src="../../js/common/define.js"></script>
+    <script th:href="@{/js/common/generic.js}" src="../../js/common/generic.js"></script>
+    <script th:href="@{/js/common/init.js}" src="../../js/common/init.js"></script>
+    
 </head>
+
+
+<head th:fragment="index-header-css">
+
+    <link rel="stylesheet" th:href="@{/css/login.css}" href="../../css/login.css" />
+    <link rel="stylesheet" th:href="@{/css/frontpage.css}" href="../../css/frontpage.css" />
+    <link rel="stylesheet" th:href="@{/css/index.css}" href="../../css/index.css" />
+    <script th:href="@{/js/model/login.js}" src="../../js/model/login.js"></script>
+    <script th:href="@{/js/model/frontpage.js}" src="../../js/model/frontpage.js"></script>
+    <script th:href="@{/js/common/index.js}" src="../../js/pages/index.js"></script>
+</head>
+
+
+<head th:fragment="header-css">
+    <link rel="stylesheet" th:href="@{/css/login.css}" href="../../css/main.css" />
+    <link rel="stylesheet" th:href="@{/css/frontpage.css}" href="../../css/main.css" />
+    
+    
+    <script src="webjars/jqplot/1.0.8r1250/jquery.jqplot.min.js"></script>
+    <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.canvasOverlay.js"></script>
+    <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.canvasTextRenderer.min.js"></script>
+    <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+    <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.dateAxisRenderer.min.js"></script>
+    <script src="webjars/jqplot/1.0.8r1250/plugins/jqplot.pieRenderer.js"></script>
+    
+    
+</head>
+
+
+
 <body>
-<div th:fragment="header">
-    <!-- this is header -->
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" th:href="@{/}">Spring Boot</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a th:href="@{/}">Home</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</div>
-
-
-<div th:fragment="footer-js">
-        <!-- this is footer-js -->
-        
-</div>
 
 
 </body>
