@@ -1,7 +1,19 @@
 
 
 
+var loginObject = {
+    pages: [
+        {
+            name: "customerContact", elements: [
+                { type: "text", name: "username", title: "Username",isRequired:true },
+                { type: "text", inputType:"password", name: "password", title: "Password",isRequired:true }
+            ]
+        }
+    ],
+    completeText: "Login"
+};
 
+var login = new GRVLogin(loginObject);
 
 
 /*

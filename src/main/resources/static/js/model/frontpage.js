@@ -10,7 +10,7 @@
  * severity = colors 
  * 
  * */
-class GRVFrontPage(){
+class GRVFrontPage{
 	constructor(frontpageContainer, messagesArray){
 		this.container = $('#fpc');
 		if(messagesArray.length > 0 ){
@@ -22,7 +22,7 @@ class GRVFrontPage(){
 }
 
 
-class GRVFrontpageMessage(){
+class GRVFrontpageMessage{
 	constructor(container,message){
 		
 	}
