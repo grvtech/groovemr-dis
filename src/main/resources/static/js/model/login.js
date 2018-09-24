@@ -5,6 +5,7 @@ class GRVLogin{
 		Survey.StylesManager.applyTheme("bootstrap");
 		var loginForm = new Survey.Model(object);
 		loginForm.showQuestionNumbers = 'off';
+		loginForm.showCompletedPage = false;
 		loginForm.requiredText = ''; 
 		$(this.widget).Survey({model:loginForm,onComplete:this.sendDataToServer});
 	}
@@ -16,3 +17,4 @@ class GRVLogin{
 
 
 
+	
