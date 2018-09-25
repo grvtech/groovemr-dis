@@ -36,13 +36,13 @@ public class CryptoUtil {
 
 	private static final String secret = "475256";
 
-	Cipher ecipher;
-	Cipher dcipher;
+	static Cipher ecipher;
+	static Cipher dcipher;
 	// 8-byte Salt
-	byte[] salt = { (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32, (byte) 0x56, (byte) 0x35, (byte) 0xE3,
+	static byte[] salt = { (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32, (byte) 0x56, (byte) 0x35, (byte) 0xE3,
 			(byte) 0x03 };
 	// Iteration count
-	int iterationCount = 19;
+	static int iterationCount = 19;
 
 	public CryptoUtil() {
 
@@ -65,8 +65,8 @@ public class CryptoUtil {
 	 * @throws javax.crypto.BadPaddingException
 	 *
 	 */
-	public String encrypt(String secretKey, String plainText) throws NoSuchAlgorithmException, InvalidKeySpecException,
-			NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,
+	public static String encrypt(String secretKey, String plainText) throws NoSuchAlgorithmException,
+			InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,
 			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		// Key generation for enc and desc
 		KeySpec keySpec = new PBEKeySpec(secretKey.toCharArray(), salt, iterationCount);
@@ -99,7 +99,7 @@ public class CryptoUtil {
 	 * @throws javax.crypto.IllegalBlockSizeException
 	 * @throws javax.crypto.BadPaddingException
 	 */
-	public String decrypt(String secretKey, String encryptedText) throws NoSuchAlgorithmException,
+	public static String decrypt(String secretKey, String encryptedText) throws NoSuchAlgorithmException,
 			InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,
 			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, IOException {
 		// Key generation for enc and desc

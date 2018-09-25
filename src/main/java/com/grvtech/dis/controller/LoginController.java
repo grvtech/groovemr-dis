@@ -113,7 +113,6 @@ public class LoginController {
 				User user = userService.getUserByUsernamePassword(uname, upass);
 
 				if (user.isEmpty()) {
-
 					mresp.setState("clear");
 					mresp.setStatus("error");
 					mresp.setMessage("this is error message");
@@ -123,7 +122,9 @@ public class LoginController {
 					mresp.setStatus("success");
 					mresp.setMessage("this is  message");
 					mresp.setTimestamp(sdf.format(new Date()));
-					mresp.setElements(Base64.getEncoder().encodeToString(elements.getBytes()));
+					// mresp.setElements(Base64.getEncoder().encodeToString(elements.getBytes()));
+
+					mresp.setElements(mapper.writeValueAsString(user));
 				}
 			} catch (JsonParseException e) {
 				// TODO Auto-generated catch block

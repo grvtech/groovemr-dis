@@ -1,36 +1,29 @@
 function deployLanguage(){
-	if(languageObject )
-	$('div[grv]').text(function(){return eval('languageObject.'+$(this).attr('i18n'))});
+	if(languageObject)
+	$('[i18n]').text(function(){return eval('languageObject.'+$(this).attr('i18n'))});
 }
 
-function loadLanguage(lang = pageLanguage){
+function loadLanguage(lang){
+	console.log('execute loadlanguage '+new Date());
 	var jqxhr = $.getJSON( "lang/lang_"+lang+".json", function(lang) {
 		languageObject = lang;
 		console.log( "success load lang file" );
 		console.log(languageObject);
-		console.log($('div[grv-button]').attr('i18n'));
 	})
-	  .done(function() {
-	    console.log( "second success" );
+	  .fail(function(xhr, textStatus, errorThrown) {
+	    console.log( "error loading language object" );
+	    console.log(errorThrown);
 	  })
-	  .fail(function() {
-	    console.log( "error" );
-	  })
-	  .always(function() {
-	    console.log( "complete" );
-	  });
 }
-loadLanguage(pageLanguage);
 
-
-function getTag(tag,lang='en'){
-	if(pageLanguage == lang){
-		return eval('languageObject'+tag);
-	}else{
-		setPageLanguage();
-		loadLanguage();
-		return eval('languageObject'+tag);
+function getTag(tag){
+	console.log('execute getTag '+new Date());
+	console.log('tag:'+pageName+'_'+tag);
+	var result = pageName+'_'+tag;
+	if(languageObject != null){
+		result = eval('languageObject.'+pageName+'_'+tag);
 	}
+	return result;
 }
 
 function setPageLanguage(lang){
@@ -41,3 +34,11 @@ function setPageLanguage(lang){
 function getPageLanguage(){
 	pageLanguage = $('html').attr('lang');
 }
+
+function getPageName(){
+	var sPath = window.location.pathname;
+	var sPage = sPath.substring(sPath.lastIndexOf('/') + 1);
+	if(sPage == '')sPage = 'index';
+	return sPage;
+}
+
