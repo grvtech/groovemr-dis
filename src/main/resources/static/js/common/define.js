@@ -1,5 +1,5 @@
-$.ajaxSettings.async = false;
+//$.ajaxSettings.async = false;
 var pageName = getPageName();
-var langFileLoaded = false;
-var languageObject = null;
+//var langFileLoaded = false;
+//var languageObject = null;
 var pageLanguage = $('html').attr('lang');

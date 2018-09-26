@@ -1,4 +1,4 @@
-{
+var lang_en = {
 	"button1":"Buton1 English",
 	"button2":"Buton2 English",
 	"index_username":"This is username",

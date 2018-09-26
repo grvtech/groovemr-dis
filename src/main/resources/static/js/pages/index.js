@@ -2,34 +2,33 @@
 
 
 var loginObject={
-	container:'grv-login',
-	loginTarget:'grv-login',
-	subscribeTarget:'grv-frontpage',
+	container:'.grv-login',
+	loginTarget:'.grv-login',
+	subscribeTarget:'.grv-frontpage',
 	subscribeMode:'modal',
-	forgotTarget:'grv-frontpage',
+	forgotTarget:'.grv-frontpage',
 	surveyLogin:{
 	    pages: [
 	        {
 	            name: "groovemr-dis-login", elements: [
-	                { type: "text", name: "username", title: getTag("username"),isRequired:true, requiredErrorText:getTag("username_required"), 
+	                { type: "text", name: "username", title: "i18n:username", isRequired:true, requiredErrorText:" ",
 	                	validators : [{
 	                		type : "text",
 	                		minLength: 2,
-	                		maxLength : 6,
 	                		text: "Username length is wrong"
 	                	}]
 	                },
-	                { type: "text", inputType:"password", name: "password", title: "Password",isRequired:true,requiredErrorText:getTag("password_required") }
+	                { type: "text", inputType:"password", name: "password", title: "i18n:password", isRequired : true, requiredErrorText:" " }
 	            ]
 	        }
 	    ],
-	    completeText: getTag("login_btn")
+	    completeText: "i18n:login_btn"
 	},
 	surveySubscribe:{
 	    pages: [
 	        {
 	            name: "groovemr-dis-subscribe", elements: [
-	                { type: "text", name: "fname", title: getTag("fname_txt"),isRequired:true, requiredErrorText:getTag("fname_required"), 
+	                { type: "text", name: "fname", title: "i18n:fname_txt",isRequired:true, requiredErrorText:"i18n:fname_required", 
 	                	validators : [{
 	                		type : "text",
 	                		minLength: 2,
@@ -37,7 +36,7 @@ var loginObject={
 	                		text: "first name length is wrong"
 	                	}]
 	                },
-	                { type: "text", name: "lname", title: getTag("lname_txt"),isRequired:true, requiredErrorText:getTag("lname_required"), 
+	                { type: "text", name: "lname", title: "i18n:lname_txt",isRequired:true, requiredErrorText:"i18n:lname_required", 
 	                	validators : [{
 	                		type : "text",
 	                		minLength: 2,
@@ -45,7 +44,7 @@ var loginObject={
 	                		text: "first name length is wrong"
 	                	}]
 	                },
-	                { type: "text", name: "email", title: getTag("email_txt"),isRequired:true, requiredErrorText:getTag("email_required"), 
+	                { type: "text", name: "email", title: "i18n:email_txt",isRequired:true, requiredErrorText:"i18n:email_required", 
 	                	validators : [{
 	                		type : "text",
 	                		minLength: 2,
@@ -53,7 +52,7 @@ var loginObject={
 	                		text: "Username length is wrong"
 	                	}]
 	                },
-	                { type: "text", inputType:"password", name: "password", title: getTag("password"),isRequired:true, requiredErrorText:getTag("password_required"), 
+	                { type: "text", inputType:"password", name: "password", title: "i18n:password",isRequired:true, requiredErrorText:"i18n:password_required", 
 	                	validators : [{
 	                		type : "text",
 	                		minLength: 2,
@@ -61,7 +60,7 @@ var loginObject={
 	                		text: "Username length is wrong"
 	                	}]
 	                },
-	                { type: "text", inputType:"password", name: "cpassword", title: getTag("cpassword"),isRequired:true, requiredErrorText:getTag("cpassword_required"), 
+	                { type: "text", inputType:"password", name: "cpassword", title: "i18n:cpassword",isRequired:true, requiredErrorText:"i18n:cpassword_required", 
 	                	validators : [{
 	                		type : "expression",
 	                		expression:"{password} = {cpassword}",
@@ -71,13 +70,13 @@ var loginObject={
 	            ]
 	        }
 	    ],
-	    completeText: getTag("subscribe_btn")
+	    completeText: "i18n:subscribe_btn"
 	},
 	surveyForgot:{
 	    pages: [
 	        {
 	            name: "groovemr-dis-forgot", elements: [
-	                { type: "text", name: "username", title: getTag("username"),isRequired:true, requiredErrorText:getTag("username_required"), 
+	                { type: "text", name: "username", title:"i18n:username" ,isRequired:true, requiredErrorText:"i18n:username_required", 
 	                	validators : [{
 	                		type : "text",
 	                		minLength: 2,
@@ -85,7 +84,7 @@ var loginObject={
 	                		text: "Username length is wrong"
 	                	}]
 	                },
-	                { type: "text", inputType:"password", name: "password", title: "Password",isRequired:true,requiredErrorText:getTag("password_required") }
+	                { type: "text", inputType:"password", name: "password", title: "i18n:password",isRequired:true,requiredErrorText:"i18n:password_required" }
 	            ]
 	        }
 	    ],
@@ -95,6 +94,12 @@ var loginObject={
 
 
 var login = new GRVLogin(loginObject);
+
+var languageConfig = {
+	"container":".grv-language"	
+};
+
+var language = new GRVLanguage(languageConfig);
 
 
 /*
