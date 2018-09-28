@@ -1,105 +1,63 @@
 
 
 
-var loginObject={
-	container:'.grv-login',
-	loginTarget:'.grv-login',
-	subscribeTarget:'.grv-frontpage',
-	subscribeMode:'modal',
-	forgotTarget:'.grv-frontpage',
+var loginConfig={
+	container:'.login',
+	loginTarget:'.login',
+	subscribeTarget:'.frontpage',
+	forgotTarget:'.frontpage',
 	surveyLogin:{
+		locale: "en",
 	    pages: [
 	        {
 	            name: "groovemr-dis-login", elements: [
-	                { type: "text", name: "username", title: "i18n:username", isRequired:true, requiredErrorText:" ",
-	                	validators : [{
-	                		type : "text",
-	                		minLength: 2,
-	                		text: "Username length is wrong"
-	                	}]
-	                },
-	                { type: "text", inputType:"password", name: "password", title: "i18n:password", isRequired : true, requiredErrorText:" " }
+	                { type: "text", name: "username", title:{en:"Username",fr:"Usager"} , isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"},validators : [{type : "text",minLength: 2,text:{en:"Username length is wrong",fr:"Longuer usager erroné"}}]},
+	                { type: "text", inputType:"password", name: "password", title: {en:"Password",fr:"Mot de passe"}, isRequired : true, requiredErrorText:{en:"Required fied",fr :"Champ requis"}}
 	            ]
 	        }
 	    ],
-	    completeText: "i18n:login_btn"
+	    completeText:{en:"Login",fr:"Login"}
 	},
 	surveySubscribe:{
 	    pages: [
 	        {
 	            name: "groovemr-dis-subscribe", elements: [
-	                { type: "text", name: "fname", title: "i18n:fname_txt",isRequired:true, requiredErrorText:"i18n:fname_required", 
-	                	validators : [{
-	                		type : "text",
-	                		minLength: 2,
-	                		maxLength : 6,
-	                		text: "first name length is wrong"
-	                	}]
-	                },
-	                { type: "text", name: "lname", title: "i18n:lname_txt",isRequired:true, requiredErrorText:"i18n:lname_required", 
-	                	validators : [{
-	                		type : "text",
-	                		minLength: 2,
-	                		maxLength : 6,
-	                		text: "first name length is wrong"
-	                	}]
-	                },
-	                { type: "text", name: "email", title: "i18n:email_txt",isRequired:true, requiredErrorText:"i18n:email_required", 
-	                	validators : [{
-	                		type : "text",
-	                		minLength: 2,
-	                		maxLength : 6,
-	                		text: "Username length is wrong"
-	                	}]
-	                },
-	                { type: "text", inputType:"password", name: "password", title: "i18n:password",isRequired:true, requiredErrorText:"i18n:password_required", 
-	                	validators : [{
-	                		type : "text",
-	                		minLength: 2,
-	                		maxLength : 6,
-	                		text: "Username length is wrong"
-	                	}]
-	                },
-	                { type: "text", inputType:"password", name: "cpassword", title: "i18n:cpassword",isRequired:true, requiredErrorText:"i18n:cpassword_required", 
-	                	validators : [{
-	                		type : "expression",
-	                		expression:"{password} = {cpassword}",
-	                		text: "Password and confirm password must be the same"
-	                	}]
-	                }
+	                { type: "text", name: "fname", title: {en:"First Name",fr:"Prenom"},isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"}},
+	                { type: "text", name: "lname", title: {en:"Last Name",fr:"Nom"},isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"}},
+	                { type: "text", name: "email", title: {en:"Email",fr:"Courriel"},isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"},validators : [{type : "email",text: {en:"Email format is wrong",fr:"Format courriel erroné"}}]},
+	                { type: "text", inputType:"password", name: "password", title: {en:"Password",fr:"Mot de passe"},isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"}},
+	                { type: "text", inputType:"password", name: "cpassword", title: {en:"Confirm password",fr:"Confirmation mot de passe"},isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"},validators : [{type : "expression",expression:"{password} = {cpassword}",text: {en:"Wrong password confirmation",fr:"Confirmation erroné"}}]}
 	            ]
 	        }
 	    ],
-	    completeText: "i18n:subscribe_btn"
+	    completeText: {en:"Send Subscription",fr:"Envoie demande de suscription"}
 	},
 	surveyForgot:{
 	    pages: [
 	        {
 	            name: "groovemr-dis-forgot", elements: [
-	                { type: "text", name: "username", title:"i18n:username" ,isRequired:true, requiredErrorText:"i18n:username_required", 
-	                	validators : [{
-	                		type : "text",
-	                		minLength: 2,
-	                		maxLength : 6,
-	                		text: "Username length is wrong"
-	                	}]
-	                },
-	                { type: "text", inputType:"password", name: "password", title: "i18n:password",isRequired:true,requiredErrorText:"i18n:password_required" }
+	                { type: "text", name: "username", title:{en:"Username",fr:"Usager"} ,isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"}},
+	                { type: "text", name: "email", title: {en:"Email",fr:"Courriel"},isRequired:true,requiredErrorText:{en:"Required field",fr:"Champ requis"} }
 	            ]
 	        }
 	    ],
-	    completeText: getTag("forgot_btn")
+	    completeText: {en:"Send password reset",fr:"Initialisé mot de passe"}
 	}
 };
 
 
-var login = new GRVLogin(loginObject);
 
-var languageConfig = {
-	"container":".grv-language"	
-};
 
+
+
+var login = new GRVLogin(loginConfig);
+var languageConfig = {"container":".grv-language",languages : [{lang:"en"},{lang:"fr"},{lang:"ro"}]};
 var language = new GRVLanguage(languageConfig);
+
+
+var frontpageConfig = {"container":".frontpage",elements:[{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"},{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"}]};
+var frontpage = new GRVFrontPage(frontpageConfig);
+
 
 
 /*

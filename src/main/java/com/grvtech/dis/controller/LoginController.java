@@ -32,7 +32,7 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = { "/", "/index.html" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/index.html", "/radu/gabor", "/radu/index.html"}, method = RequestMethod.GET)
 	public ModelAndView index() {
 		User user = repository.findById(2);
 		/*
@@ -56,12 +56,14 @@ public class LoginController {
 		 * System.out.println("next refresh shoud be ok");
 		 * System.out.println("-----------------------------------------");
 		 * 
-		 * } else { System.out.println("-----------------------------------------");
+		 * } else {
+		 * System.out.println("-----------------------------------------");
 		 * System.out.println("The user 2 is in memory db : YES");
 		 * System.out.println("-----------------------------------------"); }
 		 * 
 		 * // RestTemplate restTemplate = new RestTemplate(); // User user =
-		 * restTemplate.getForObject("http://localhost:8080/user/2", // User.class);
+		 * restTemplate.getForObject("http://localhost:8080/user/2", //
+		 * User.class);
 		 */
 
 		ModelAndView modelAndView = new ModelAndView();
@@ -70,7 +72,7 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
+	@RequestMapping(value = {"/login/login"}, method = RequestMethod.POST)
 	public MessageResponse login(final HttpServletRequest request) {
 
 		// RestTemplate restTemplate = new RestTemplate();
@@ -93,7 +95,8 @@ public class LoginController {
 		if (state.equals("enc")) {
 			String elements = jn.get("elements").toString().replaceAll("\"", "");
 			elements = new String(Base64.getDecoder().decode(elements));
-			// System.out.println(new String(Base64.getDecoder().decode(elements)));
+			// System.out.println(new
+			// String(Base64.getDecoder().decode(elements)));
 
 			ObjectMapper mapper = new ObjectMapper();
 			JsonFactory factory = mapper.getFactory();
@@ -172,8 +175,22 @@ public class LoginController {
 		return mresp;
 	}
 
-	@RequestMapping(value = { "/subscribe" }, method = RequestMethod.POST)
+	@RequestMapping(value = {"/login/subscribe"}, method = RequestMethod.POST)
 	public ModelAndView subscribe() {
+
+		// RestTemplate restTemplate = new RestTemplate();
+		// User user = restTemplate.getForObject("http://localhost:8080/login",
+		// User.class);
+
+		ModelAndView modelAndView = new ModelAndView();
+		// modelAndView.addObject("username", user.getUsername());
+		// modelAndView.addObject("password", user.getPassword());
+		modelAndView.setViewName("index");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = {"/login/forgot"}, method = RequestMethod.POST)
+	public ModelAndView forgot() {
 
 		// RestTemplate restTemplate = new RestTemplate();
 		// User user = restTemplate.getForObject("http://localhost:8080/login",
