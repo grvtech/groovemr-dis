@@ -52,7 +52,7 @@ public class FrontpageControler {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("index");
-		modelAndView.addObject(user);
+		
 		return modelAndView;
 	}
 }
