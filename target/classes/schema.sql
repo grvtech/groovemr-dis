@@ -20,3 +20,14 @@ create table session
    endsession timestamp not null
   
 );
+
+create table frontpage
+(
+   idfrontpage integer not null,
+   uuidapp UUID not null,
+   uuiduser UUID not null,
+   created timestamp not null,
+   modified timestamp not null,
+   message text
+  
+);

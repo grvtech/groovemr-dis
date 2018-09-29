@@ -1,5 +1,6 @@
 package com.grvtech.dis.model;
 
+import javax.servlet.http.HttpServletRequestWrapper;
 
 /*
  * MessageRequest Format
@@ -13,13 +14,16 @@ package com.grvtech.dis.model;
  * 
  * }
  * 
- * 
- * 
  * */
 
-
-
-
 public class MessageRequest {
-	private String messageid; 
+	private String state;
+	private String timestamp;
+	private String elements;
+
+	public MessageRequest(HttpServletRequestWrapper request) {
+		this.state = request.getParameter("state");
+		this.timestamp = request.getParameter("timestamp");
+
+	}
 }
