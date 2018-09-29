@@ -1,0 +1,19 @@
+.grv-login{display:block;width:80%;min-width:400px;height:300px;background-color:white;padding:0;}
+.grv-login .grvlw{margin:0px;margin-top:-20px;background-color:cyan;}
+.grv-login .alert-danger{
+	padding: 2px;
+	margin:0px;
+	font-size:0.8em;
+}
+
+.grv-login h5{
+	padding: 2px;
+	margin:0px;
+	font-size:1em;
+}
+
+.grv-login .form-control:focus{
+	box-shadow:none;
+}
+
+	
