@@ -166,12 +166,6 @@ public class LoginController {
 		}
 		System.out.println("-----------------------------------------");
 
-		ModelAndView modelAndView = new ModelAndView();
-		// modelAndView.addObject("username", user.getUsername());
-		// modelAndView.addObject("password", user.getPassword());
-
-		modelAndView.addObject(mresp);
-		modelAndView.setViewName("index");
 		return mresp;
 	}
 

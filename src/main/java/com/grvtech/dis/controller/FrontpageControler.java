@@ -14,7 +14,7 @@ public class FrontpageControler {
 	@Autowired
 	UserRepository repository;
 	@Autowired
-	FrontpageService frontpageService;
+	//FrontpageService frontpageService;
 
 	@RequestMapping(value = {"/frontpage/get"}, method = RequestMethod.GET)
 	public ModelAndView index() {

@@ -12,7 +12,7 @@ var loginConfig={
 	        {
 	            name: "groovemr-dis-login", elements: [
 	                { type: "text", name: "username", title:{en:"Username",fr:"Usager"} , isRequired:true, requiredErrorText:{en:"Required field",fr:"Champ requis"},validators : [{type : "text",minLength: 2,text:{en:"Username length is wrong",fr:"Longuer usager erroné"}}]},
-	                { type: "text", inputType:"password", name: "password", title: {en:"Password",fr:"Mot de passe"}, isRequired : true, requiredErrorText:{en:"Required fied",fr :"Champ requis"}}
+	                { type: "text", inputType:"password", name: "password", title: {en:"Password",fr:"Mot de passe"}, isRequired : true, requiredErrorText:{en:"Required field",fr :"Champ requis"}}
 	            ]
 	        }
 	    ],
@@ -47,16 +47,19 @@ var loginConfig={
 
 
 
+fetchConfig("login",GRVLogin);
 
 
+//var login = new GRVLogin(loginConfig);
+//var languageConfig = {"container":".language",languages : [{lang:"en"},{lang:"fr"},{lang:"ro"}]};
+//var language = new GRVLanguage(languageConfig);
+fetchConfig("language",GRVLanguage);
 
-var login = new GRVLogin(loginConfig);
-var languageConfig = {"container":".grv-language",languages : [{lang:"en"},{lang:"fr"},{lang:"ro"}]};
-var language = new GRVLanguage(languageConfig);
+//var frontpageConfig = {"container":".frontpage",elements:[{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"},{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"}]};
+//var frontpage = new GRVFrontPage(frontpageConfig);
+fetchConfig("frontpage",GRVFrontPage);
 
 
-var frontpageConfig = {"container":".frontpage",elements:[{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"},{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"}]};
-var frontpage = new GRVFrontPage(frontpageConfig);
 
 
 

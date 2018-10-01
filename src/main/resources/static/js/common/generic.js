@@ -24,9 +24,11 @@ function deployLanguage(){
 		var tag = t.substring(4,t.length);
 		if(t.indexOf('val:')>=0){
 			result = eval('languageObject.'+pageLanguage+'.'+tag);
+			$(this).val(result);
 		}
 		if(t.indexOf('txt:')>=0){
 			result = eval('languageObject.'+pageLanguage+'.'+tag);
+			$(this).text(result);
 		}
 	};
 	
@@ -90,24 +92,28 @@ function getPageObject(){
 	
 	obj = url;
 	obj['parameters'] = objParameters;
-	
 	return obj;
-	/*
-	 * 
-	 * url.hostname;  //  'example.com'
-url.port;      //  12345
-url.search;    //  '?startIndex=1&pageSize=10'
-url.pathname;  //  '/blog/foo/bar'
-url.protocol;  //  'http:'
-	 * */
-	
-	
 }
 
 
-var GRVComm = function(url,dataArray, callback){
+function fetchData(url,dataArray, callback){
 	var p = getPageObject();
 	console.log(p);
 } 
 
-GRVComm();
+
+
+
+function fetchConfig(configName,callback){
+	var jqxhr = $.getJSON( "js/config/"+configName+".json", function(object) {
+		if (callback && typeof(callback) === "function") {
+			callback(object);
+	    }
+		console.log( "success load config file" );
+	}).fail(function(xhr, textStatus, errorThrown) {
+	    console.log( "error loading language object" );
+	    console.log(errorThrown);
+	})
+}
+
+

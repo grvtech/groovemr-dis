@@ -1,0 +1,17 @@
+{
+	"container":".frontpage",
+	"elements":[
+		{
+			"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "
+		},
+		{
+			"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"
+		},
+		{
+			"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "
+		},
+		{
+			"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"
+		}
+	]
+}
