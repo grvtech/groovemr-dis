@@ -9,29 +9,6 @@ function GRVLogin(object){
 		loginForm.requiredText = '';
 		loginForm.locale = pageLanguage;
 		pageForms.push(loginForm);
-		/*
-		loginForm.onServerValidateQuestions.add(function(survey,options){
-			var url = getPageObject();
-			var mr = new GRVMessageRequest(survey.data,true);
-			//call the ajax method
-			
-			console.log(survey);
-			console.log(options);
-		    $.ajax({
-		    			url: url.origin+"/login/login",
-		    			type: 'post',
-		                dataType: 'json',
-		                contentType: 'application/json',
-		                data: JSON.stringify(mr)
-		    		}).then(function (data) {
-				            console.log(data);
-				            //if (!found) options.errors["country"] = "The country name '" + countryName + "' is not in this list: https://restcountries.eu/rest/v2/all";
-				            
-				            //tell survey that we are done with the server validation
-				            options.complete();
-				        });
-		});
-		*/
 		$(this.loginWidget).Survey({model:loginForm,onServerValidateQuestions : function(survey,options){
 			var url = getPageObject();
 			var mr = new GRVMessageRequest(survey.data,true);

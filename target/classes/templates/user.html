@@ -1,6 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
+	<div th:replace="common/header ::common-header"/>
+	<div th:replace="common/header ::user-header"/>
+</head>
+<body>
+<div th:replace="common/body :: user-template"/>
+<div th:replace="common/footer :: user-footer-js"/>
+</body>
+</html>
+
+
+
+
+<!-- 
+<!doctype html>
+<html lang="en">
+<head>
 	
 	<link rel="stylesheet" href="css/grvdis.css">
 	<link rel="stylesheet" href="webjars/jqplot/1.0.8r1250/jquery.jqplot.min.css">
@@ -10,8 +26,6 @@
 	<script type="text/javascript" src="js/user.js"></script>
 </head>
 <body>
-
-
 	<div class="wrap">
 		<div class="coloana">&nbsp;</div>
 		<div class="main">
@@ -23,8 +37,8 @@
 				  <li><a href="about.asp">About</a></li>
 				</ul>
 			</nav>
-			<!-- section is always full width 
-			<section class="vspacer"></section>-->
+
+			<section class="vspacer"></section>
 			<section class="search">
 				<div class="search-title-container">
 					<text>Search Patient</text>
@@ -167,7 +181,7 @@
 						<div class="header">stats2</div>
 						<div id="chart1" style="width:90%;height:300px;margin:0 auto;"></div>
 					</article>
-					<!-- <article class="statsitem">stats3</article> --> 
+ 
 				</div>
 			
 			</section>
@@ -179,41 +193,6 @@
 		<div class="grv">made by grv</div>
 		<div class="logo">GRooVEmr</div>
 	</div>
-
-<!-- 
-<p class="test1"></p>
-<div th:text="${user.uuidperson}"></div>
-
-
-<form autocomplete="off" th:action="@{/login}"  method="post" role="form" class="sky-form" enctype="utf8">
-        <header>Registration form</header>
-        <fieldset>
-            <section>
-                <label class="input">
-                    <i class="icon-append icon-user"></i>
-                    <input  type="text" placeholder="username" id="username" name="username"/>
-                    <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
-                </label>
-            </section>
-            
-            <section>
-                <label class="input">
-                    <i class="icon-append icon-user"></i>
-                    <input type="password" placeholder="password" id="password" name="password"/>
-                    <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
-                </label>
-            </section>
-            
-        </fieldset>
-        <footer>
-            <button id="btn-signup" type="submit" class="button">Login</button>
-        </footer>
-    </form>
- -->
-
-
-
-
 
 <script>
 
@@ -238,3 +217,6 @@ for(var i=0;i<obarr.length;i++){
 
 
 </html>
+
+
+ -->

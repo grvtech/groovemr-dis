@@ -3,7 +3,7 @@
 </head>
 <body>
 <div >
-    <div th:fragment="index-template" class="wrap">
+    <div th:fragment="index-template" class="wrap index-page">
 	    <div class="index-column index-col1">
 	    	<div class="grv-logo">GRooVEMR</div>
 	    	<div class="login"></div>
@@ -16,6 +16,36 @@
 		<div class="grvinfo"></div>
 		<div class="language"></div>
     </div>
+    
+    <div th:fragment="user-template" class="wrap user-page">
+	    <div class="grv-header shadow">
+	    	<div class="grv-menubtn"><i class="fas fa-bars"></i></div>
+	    	<div class="grv-logo">groovemr</div>
+	    	<div class="grv-search">search</div>
+	    	<div class="grv-pils">
+	    	
+		    	<div class="navbar">
+				  <div class="button">
+				    <i class="fa fa-globe"></i>
+				    <span class="button__badge">2</span>
+				  </div>
+				  <div class="button">
+				    <i class="fa fa-comments"></i>
+				    <span class="button__badge">4</span>
+				  </div>
+				</div>
+				
+	    	</div> <!-- container for fills like messages notifications alerts -->
+	    	<div class="grv-menu"></div>
+	    	<div class="grv-language"></div>
+	    	<div class="grv-settings"><i class="fas fa-cog"></i></div>
+	    	
+	    </div>
+	    <div class="grv-main"></div>
+		<div class="grvinfo"></div>
+    </div>
+    
+    
 </div>
 </body>
 </html>
