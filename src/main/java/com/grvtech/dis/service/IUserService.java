@@ -20,4 +20,6 @@ public interface IUserService {
 	void updateUser(User user);
 
 	void deleteUser(int iduser);
+
+	void process();
 }

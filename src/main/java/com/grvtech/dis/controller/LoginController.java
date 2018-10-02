@@ -1,9 +1,11 @@
 package com.grvtech.dis.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.grvtech.dis.model.MessageResponse;
+import com.grvtech.dis.model.ClientMessageRequest;
+import com.grvtech.dis.model.ClientMessageResponse;
 import com.grvtech.dis.model.User;
 import com.grvtech.dis.repository.UserRepository;
 import com.grvtech.dis.service.UserService;
@@ -73,99 +74,62 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = {"/login/login"}, method = RequestMethod.POST)
-	public MessageResponse login(final HttpServletRequest request) {
+	public ClientMessageResponse login(final HttpServletRequest request) {
 
 		// RestTemplate restTemplate = new RestTemplate();
 		// User user = restTemplate.getForObject("http://localhost:8080/login",
 		// User.class);
-
+		ClientMessageResponse mresp = new ClientMessageResponse();
+		ObjectMapper mapper = new ObjectMapper();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyMMddhhmmss");
 		JsonNode jn = HttpUtil.getJSONFromPost(request);
+
 		System.out.println("-----------------------------------------");
 		System.out.println("This is LOGIN POST API");
 		System.out.println("-----------------------------------------");
 		System.out.println("timestamp : " + jn.get("timestamp").toString());
 		System.out.println("elements : " + jn.get("elements").toString());
 
-		String state = jn.get("state").toString().replaceAll("\"", "");
-		MessageResponse mresp = new MessageResponse();
+		// jn.get("state").toString().replaceAll("\"", "");
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyMMddhhmmss");
-		System.out.println("----------------------------------------- state:" + state);
+		try {
+			ClientMessageRequest mr = new ClientMessageRequest(jn);
 
-		if (state.equals("enc")) {
-			String elements = jn.get("elements").toString().replaceAll("\"", "");
-			elements = new String(Base64.getDecoder().decode(elements));
-			// System.out.println(new
-			// String(Base64.getDecoder().decode(elements)));
+			String username = mr.getElements().get("username").asText();
+			String password = mr.getElements().get("password").asText();
 
-			ObjectMapper mapper = new ObjectMapper();
-			JsonFactory factory = mapper.getFactory();
-			JsonParser parser;
-			try {
-				parser = factory.createParser(elements);
-				JsonNode jnode = mapper.readTree(parser);
+			System.out.println("-----------------------------------------");
+			System.out.println("This is LOGIN POST API");
+			System.out.println("-----------------------------------------");
+			System.out.println("username : " + username);
+			System.out.println("password : " + password);
 
-				System.out.println("-----------------------------------------");
-				System.out.println("-username : " + jnode.get("username"));
-				System.out.println("-password : " + jnode.get("password"));
-				System.out.println("-----------------------------------------");
+			User user = userService.getUserByUsernamePassword(username, password);
 
-				String uname = jnode.get("username").toString().replaceAll("\"", "");
-				String upass = jnode.get("password").toString().replaceAll("\"", "");
-
-				User user = userService.getUserByUsernamePassword(uname, upass);
-
-				if (user.isEmpty()) {
-					mresp.setState("clear");
-					mresp.setStatus("error");
-					mresp.setMessage("this is error message");
-					mresp.setTimestamp(sdf.format(new Date()));
-				} else {
-					mresp.setState("enc");
-					mresp.setStatus("success");
-					mresp.setMessage("this is  message");
-					mresp.setTimestamp(sdf.format(new Date()));
-					// mresp.setElements(Base64.getEncoder().encodeToString(elements.getBytes()));
-
-					mresp.setElements(mapper.writeValueAsString(user));
-				}
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (user.isEmpty()) {
+				mresp.setState("enc");
+				mresp.setStatus("error");
+				mresp.setMessage("Wrong username or password");
+				mresp.setTimestamp(sdf.format(new Date()));
+				HashMap<String, String> error1 = new HashMap<String, String>();
+				error1.put("username", "i18n:wrongusername_txt");
+				error1.put("password", "i18n:wrongpassword_txt");
+				String base64 = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(error1));
+				mresp.setElements(base64);
+			} else {
+				mresp.setState("enc");
+				mresp.setStatus("success");
+				mresp.setMessage("this is  message");
+				mresp.setTimestamp(sdf.format(new Date()));
+				mresp.setElements(mapper.writeValueAsString(user));
 			}
-
-		} else {
-
-			String elements = jn.get("elements").toString().replaceAll("\\\\", "").replaceAll("^\"(.*)\"$", "$1");
-
-			System.out.println(elements.replaceAll("^\"(.*)\"$", "$1"));
-
-			ObjectMapper mapper = new ObjectMapper();
-			JsonFactory factory = mapper.getFactory();
-			JsonParser parser;
-			try {
-				parser = factory.createParser(elements);
-				JsonNode jnode = mapper.readTree(parser);
-
-				System.out.println("-----------------------------------------");
-				System.out.println("-username : " + jnode.get("username"));
-				System.out.println("-password : " + jnode.get("password"));
-				System.out.println("-----------------------------------------");
-
-			} catch (JsonParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		} catch (JsonParseException e1) {
+			e1.printStackTrace();
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		System.out.println("-----------------------------------------");
-
 		return mresp;
 	}
 

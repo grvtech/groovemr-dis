@@ -5,6 +5,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,25 +14,28 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grvtech.dis.model.MessageRequest;
 import com.grvtech.dis.model.User;
 import com.grvtech.dis.repository.UserRepository;
-import com.grvtech.dis.util.CryptoUtil;
 
 @Service
 public class UserService implements IUserService {
+
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
 	UserRepository repository;
@@ -67,10 +71,24 @@ public class UserService implements IUserService {
 	}
 
 	@Override
+	@Async("processExecutor")
+	public void process() {
+		logger.info("Received request to process in ProcessServiceImpl.process()");
+		try {
+			Thread.sleep(15 * 1000);
+			logger.info("Processing complete");
+		} catch (InterruptedException ie) {
+			logger.error("Error in ProcessServiceImpl.process(): {}", ie.getMessage());
+		}
+	}
+
+	@Override
 	public User getUserByUsernamePassword(String username, String password) {
 		User user = repository.findByUP(username, password);
 		RestTemplate restTemplate = new RestTemplate();
 		ObjectMapper mapper = new ObjectMapper();
+		// new SimpleDateFormat("yyyMMddhhmmss");
+
 		if (user.isEmpty()) {
 			// not in memory - go get it
 			System.out.println("-----------------------------------------");
@@ -79,48 +97,58 @@ public class UserService implements IUserService {
 			/**/
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			headers.add("ApplicationID", "1234");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			HashMap<String, String> map = new HashMap<String, String>();
+
+			map.put("username", username);
+			map.put("password", password);
+
+			MessageRequest mr;
 			try {
-				map.add("username", CryptoUtil.encrypt("test", username));
-				map.add("password", CryptoUtil.encrypt("test", password));
+				mr = new MessageRequest(new Date(), "action", map);
+				new HttpEntity<MessageRequest>(mr, headers);
+				ResponseEntity<User> response;
+
+				response = restTemplate.postForEntity("http://localhost:8080/user/gu", mapper.writeValueAsString(mr), User.class);
+				user = response.getBody();
+
+				if (user.isEmpty()) {
+					user = new User();
+				}
+
 			} catch (InvalidKeyException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (NoSuchAlgorithmException e1) {
-
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (InvalidKeySpecException e1) {
-
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (NoSuchPaddingException e1) {
-
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (InvalidAlgorithmParameterException e1) {
-
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (UnsupportedEncodingException e1) {
-
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IllegalBlockSizeException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (BadPaddingException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
-
-			new HttpEntity<MultiValueMap<String, Object>>(map, headers);
-			ResponseEntity<User> response;
-			try {
-				response = restTemplate.postForEntity("http://localhost:8080/user/gu", mapper.writeValueAsString(map), User.class);
-				user = response.getBody();
 			} catch (RestClientException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			if (user.isEmpty()) {
-				user = new User();
-			}
 		}
 		return user;
 	}

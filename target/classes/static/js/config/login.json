@@ -8,21 +8,15 @@
 	    "pages": [
 	        {
 	            "name": "groovemr-dis-login", "elements": [
-	                { "type": "text", "name": "username", "title":{"en":"Username","fr":"Usager"} , "isRequired":true,"requiredErrorText":{"en":"Required field","fr":"Champ requis"},"validators" : [{"type" : "text","minLength": 2, "text":{"en":"Username length is wrong","fr":"Longuer usager erroné"}}]},
-	                { 
-	                	"type": "text", 
-	                	"inputType":"password", 
-	                	"name": "password", 
-	                	"title": {
-	                		"en":"Password",
-	                		"fr":"Mot de passe"
-	                	}, 
-	                	"isRequired":true, 
-	                	"requiredErrorText":{
-	                		"en":"Required field",
-	                		"fr" :"Champ requis"
-	                	}
-	                }
+	            	{
+	            		"type": "panel",
+                    	"innerIndent": 0,
+                    	"name": "panel1",
+                    	"elements": [	
+                    		{ "type": "text", "name": "username", "title":{"en":"Username","fr":"Usager"} , "isRequired":true,"requiredErrorText":{"en":"Required field","fr":"Champ requis"},"validators" : [{"type" : "text","minLength": 2, "text":{"en":"Username length is wrong","fr":"Longuer usager erroné"}}]},
+	                		{ "type": "text","inputType":"password","name": "password","title": {"en":"Password","fr":"Mot de passe"},"isRequired":true,"requiredErrorText":{"en":"Required field","fr" :"Champ requis"}}	
+                    	]
+	            	}
 	            ]
 	        }
 	    ],

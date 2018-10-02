@@ -1,6 +1,6 @@
 package com.grvtech.dis.model;
 
-public class MessageResponse {
+public class ClientMessageResponse {
 	private String status; // success | error
 	private String timestamp;
 	private String message;
@@ -82,7 +82,7 @@ public class MessageResponse {
 		this.elements = elements;
 	}
 
-	public MessageResponse(String status, String timestamp, String message, String state, String elements) {
+	public ClientMessageResponse(String status, String timestamp, String message, String state, String elements) {
 		super();
 		this.status = status;
 		this.timestamp = timestamp;
@@ -91,7 +91,7 @@ public class MessageResponse {
 		this.elements = elements;
 	}
 
-	public MessageResponse() {
+	public ClientMessageResponse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

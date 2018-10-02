@@ -1,4 +1,8 @@
-html{font-size:13px;font-family:Courier New,Helvetica, Arial !important;}
+html{font-size:16px;font-family:Courier New,Helvetica, Arial !important;}
+@media screen and (max-width: 1024px) {html{font-size:12px;}}
+@media screen and (min-width: 1025px) and (max-width: 1250px) {html{font-size:13px;}}
+@media screen and (min-width:1251px) and (max-width: 1450px) {html{font-size:14px;}}
+@media screen and (min-width:1451px) and (max-width: 1600px) {html{font-size:15px;}}
 body{margin:0;display:block;width:100%;height:100%;}
 .grvinfo{position:fixed;right:10px;bottom:10px;width:50px;height:50px;background:url('/images/logo.png') center center no-repeat;background-size: 90% 90%;}
 .shadow{
@@ -11,14 +15,11 @@ body{margin:0;display:block;width:100%;height:100%;}
 }
 
 /*COMMON TO ALL ELEMENTS THAT HAS grv as class*/
-.grv .alert{
-	padding:2px;
-	font-size:0.7rem;
-	margin:2px;
-}
+.grv .alert{padding:2px;font-size:0.7rem;margin:2px;}
 .grv .panel-footer, .card-footer {text-align: right;background-color:transparent;border:none;padding:0.5rem 1.0rem;}
 .grv .has-error input{border:1px solid red;}
 .grv .form-control{border:1px solid #cdcdcd;}
 .grv .form-control:focus{box-shadow:none;border:1px solid #4d4d4d;}
 .grv .btn-secondary{margin-right:10px;}
 .grv .sv_complete_btn{background-color:black;color:#ffffff;}
+/*.grv .sv_qstn{padding:0.5em 1em 1em 0em !important;}*/

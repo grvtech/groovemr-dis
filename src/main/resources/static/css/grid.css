@@ -1,8 +1,14 @@
 /*comon*/
 .wrap{position:absolute;left:0px;top:0px;height:100%;width:100%;margin:0;min-width:1024px;min-height:700px;background-color:#fefefe;}
+
+.grv-header{flex:1;max-height:40px;background-color:#ffffff;display:flex;flex-direction:row;}
+.grv-main{flex:1;display:flex;flex-direction:row;}
+
+
+
 /* index 3 columns grid*/
-.index-page{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content: flex-start;align-items:stretch;}
-.index-coloana{flex:1 0;}
+.index-page{display:flex;flex-direction:column;}
+.index-coloana{flex:1;}
 .index-col1{width:40%;height:100%;display:flex;flex-wrap:nowrap;flex-direction: column;justify-content:center;align-items:center;}
 .index-col2{width:40%;height:100%;display:flex;flex-wrap:nowrap;flex-direction: column;justify-content:center;align-items:center;}
 .index-col3{width:20%;height:100%;}
@@ -11,9 +17,8 @@
 
 /* user page grid*/
 .user-page{display:flex;flex-direction:column;}
-.grv-header{flex:1;max-height:40px;background-color:#ffffff;display:flex;flex-direction:row;}
+
 .grv-header > div {flex:1;}
-.grv-main{flex:1;}
 
 .grv-menubtn{
 	max-width:30px;

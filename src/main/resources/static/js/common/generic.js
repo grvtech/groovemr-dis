@@ -40,6 +40,29 @@ function deployLanguage(){
 	
 }
 
+function localiseObject(object){
+	if(object && typeof(object) != "undefined"){
+		if(typeof(object) == "object" || typeof(object) == "array"){
+			$.each(object, function(index, value){
+				//console.log(index+"    "+typeof(value));
+				if(typeof(value) == "object" || typeof(value) == "array"){
+					object[index] = localiseObject(value);
+				}else{
+					object[index] = getTag(value);
+				}
+				
+			});
+			console.log(object);
+			return object;
+		}else{
+			console.log(typeof(object));
+			return getTag(object);
+		}
+		
+	}else return null;
+}
+
+
 function loadLanguage(lang){
 	console.log('execute loadlanguage '+new Date());
 	var jqxhr = $.getJSON( "lang/lang_"+lang+".json", function(lang) {
@@ -53,12 +76,16 @@ function loadLanguage(lang){
 	  })
 }
 
-function getTag(tag){
-	//console.log('execute getTag '+new Date());
-	//console.log('tag:'+pageName+'_'+tag);
-	var result = pageLanguage+'.'+pageName+'_'+tag;
-	if(languageObject != null){
-		result = eval('languageObject.'+pageLanguage+'.'+pageName+'_'+tag);
+function getTag(t){
+	var result = t;
+	if(typeof(t) == "string"){
+		if(t.indexOf('i18n:') >= 0){
+			var tag = t.substring(5,t.length);
+			result = pageLanguage+'.'+tag;
+			if(languageObject != null){
+				result = eval('languageObject.'+pageLanguage+'.'+tag);
+			}
+		}
 	}
 	return result;
 }

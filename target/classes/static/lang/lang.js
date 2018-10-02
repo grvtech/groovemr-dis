@@ -18,7 +18,9 @@ var languageObject = {
 			"index_fname_txt":"First name",
 			"index_lname_txt":"Last name",
 			"index_email_txt":"Email",
-			"index_cpassword":"Confirm Password"
+			"index_cpassword":"Confirm Password",
+			"wrongusername_txt":"wrong username or...",
+			"wrongpassword_txt":"wrong password",
 
 			
 		},
@@ -41,7 +43,10 @@ var languageObject = {
 			"index_fname_txt":"First name",
 			"index_lname_txt":"Last name",
 			"index_email_txt":"Email",
-			"index_cpassword":"Confirm Password"
+			"index_cpassword":"Confirm Password",
+			"wrongusername_txt":"wrong username or...",
+			"wrongpassword_txt":"wrong password",
+
 		},
 		ro:{
 			"cancel_btn":"Cancel",
@@ -59,6 +64,9 @@ var languageObject = {
 			"index_fname_txt":"First name",
 			"index_lname_txt":"Last name",
 			"index_email_txt":"Email",
-			"index_cpassword":"Confirm Password"
+			"index_cpassword":"Confirm Password",
+			"wrongusername_txt":"wrong username or...",
+			"wrongpassword_txt":"wrong password",
+
 		}
 }

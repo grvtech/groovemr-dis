@@ -11,11 +11,8 @@ function GRVLogin(object){
 		pageForms.push(loginForm);
 		$(this.loginWidget).Survey({model:loginForm,onServerValidateQuestions : function(survey,options){
 			var url = getPageObject();
-			var mr = new GRVMessageRequest(survey.data,true);
+			var mr = new GRVMessageRequest(survey.data,'login','',true);
 			//call the ajax method
-			
-			console.log(survey);
-			console.log(options);
 		    $.ajax({
 		    			url: url.origin+"/login/login",
 		    			type: 'post',
@@ -23,19 +20,18 @@ function GRVLogin(object){
 		                contentType: 'application/json',
 		                data: JSON.stringify(mr)
 		    		}).then(function (data) {
-				            console.log(data);
-				            if (data.status == "success"){
-				            	window.location = "/user";
-				            } else{
-				            	options.errors["username"] = "The country name is not in this list: https://restcountries.eu/rest/v2/all";
+				            var mresp = new GRVMessageResponse(data);
+				            if (mresp.status == "error"){
+				            	localiseObject(mresp);
+				            	options.errors = mresp.elements;
 				            }
-				            
-				            
 				            //tell survey that we are done with the server validation
 				            options.complete();
 				        });
+		},onComplete:function(survey,options){
+			window.location = "/user";
 		}});
-		
+			
 		this.subscribeWidget = $('<div>',{class:'grv-widget grv-subscribe',id:'subscribeWidget'}).appendTo(this.loginContainer);
 		this.subscribeButton = $('<div>',{class:'btn btn-secondary'}).text('i18n:subscribe_btn').appendTo(this.subscribeWidget);
 		this.forgotWidget = $('<div>',{class:'grv-widget grv-forgot',id:'forgotWidget'}).appendTo(this.loginContainer);
