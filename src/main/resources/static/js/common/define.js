@@ -4,3 +4,4 @@ var pageName = getPageName();
 //var languageObject = null;
 var pageLanguage = $('html').attr('lang');
 var pageForms = [];
+

@@ -17,6 +17,7 @@ import javax.crypto.NoSuchPaddingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -39,6 +40,12 @@ public class UserService implements IUserService {
 
 	@Autowired
 	UserRepository repository;
+
+	@Value("${core.server}")
+	private String serverCore;
+
+	@Value("${app.id}")
+	private String appid;
 
 	@Override
 	public List<User> getAllUsers() {
@@ -97,7 +104,7 @@ public class UserService implements IUserService {
 			/**/
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			headers.add("ApplicationID", "1234");
+			headers.add("ApplicationID", appid);
 
 			HashMap<String, String> map = new HashMap<String, String>();
 
@@ -110,45 +117,90 @@ public class UserService implements IUserService {
 				new HttpEntity<MessageRequest>(mr, headers);
 				ResponseEntity<User> response;
 
-				response = restTemplate.postForEntity("http://localhost:8080/user/gu", mapper.writeValueAsString(mr), User.class);
+				response = restTemplate.postForEntity("http://" + serverCore + "user/gubup", mapper.writeValueAsString(mr), User.class);
 				user = response.getBody();
 
-				if (user.isEmpty()) {
-					user = new User();
+				if (!user.isEmpty()) {
+					addUser(user);
 				}
 
 			} catch (InvalidKeyException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (NoSuchAlgorithmException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (InvalidKeySpecException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (NoSuchPaddingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (InvalidAlgorithmParameterException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IllegalBlockSizeException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (BadPaddingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (RestClientException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		return user;
+	}
 
+	@Override
+	public User getUserByEmailPassword(String email, String password) {
+		User user = repository.findByEP(email, password);
+		RestTemplate restTemplate = new RestTemplate();
+		ObjectMapper mapper = new ObjectMapper();
+		// new SimpleDateFormat("yyyMMddhhmmss");
+
+		if (user.isEmpty()) {
+			// not in memory - go get it
+			System.out.println("-----------------------------------------");
+			System.out.println("The user is NOT in memory db go fetch it from server");
+			System.out.println("-----------------------------------------");
+			/**/
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			headers.add("ApplicationID", appid);
+
+			HashMap<String, String> map = new HashMap<String, String>();
+
+			map.put("email", email);
+			map.put("password", password);
+
+			MessageRequest mr;
+			try {
+				mr = new MessageRequest(new Date(), "action", map);
+				new HttpEntity<MessageRequest>(mr, headers);
+				ResponseEntity<User> response;
+
+				response = restTemplate.postForEntity("http://" + serverCore + "/user/gubep", mapper.writeValueAsString(mr), User.class);
+				user = response.getBody();
+
+			} catch (InvalidKeyException e1) {
+				e1.printStackTrace();
+			} catch (NoSuchAlgorithmException e1) {
+				e1.printStackTrace();
+			} catch (InvalidKeySpecException e1) {
+				e1.printStackTrace();
+			} catch (NoSuchPaddingException e1) {
+				e1.printStackTrace();
+			} catch (InvalidAlgorithmParameterException e1) {
+				e1.printStackTrace();
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			} catch (IllegalBlockSizeException e1) {
+				e1.printStackTrace();
+			} catch (BadPaddingException e1) {
+				e1.printStackTrace();
+			} catch (RestClientException e) {
+				e.printStackTrace();
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
 		return user;
 	}
@@ -167,8 +219,62 @@ public class UserService implements IUserService {
 
 	@Override
 	public boolean addUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println("------------------------------------");
+		int r = repository.insert(user);
+		System.out.println("------------------------------------");
+		// process();
+		// addUserToCore(user);
+		return (r == 1) ? true : false;
+	}
+
+	@Override
+	@Async("processExecutor")
+	public void addUserToCore(User user) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		ObjectMapper mapper = new ObjectMapper();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		headers.add("ApplicationID", appid);
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("username", user.getUsername());
+		map.put("email", user.getEmail());
+		map.put("password", user.getPassword());
+		map.put("uuiduser", user.getUuiduser().toString());
+		map.put("uuidperson", user.getUuidperson().toString());
+		map.put("pin", user.getPin());
+		map.put("logo", user.getLogo());
+		map.put("securityimage", user.getSecurityimage());
+		map.put("authmethod", user.getAuthmethod());
+
+		MessageRequest mr;
+		try {
+			mr = new MessageRequest(new Date(), "subscribe", map);
+			new HttpEntity<MessageRequest>(mr, headers);
+			restTemplate.postForEntity("http://" + serverCore + "/user/addu", mapper.writeValueAsString(mr), User.class);
+
+		} catch (InvalidKeyException e1) {
+			e1.printStackTrace();
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+		} catch (InvalidKeySpecException e1) {
+			e1.printStackTrace();
+		} catch (NoSuchPaddingException e1) {
+			e1.printStackTrace();
+		} catch (InvalidAlgorithmParameterException e1) {
+			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		} catch (IllegalBlockSizeException e1) {
+			e1.printStackTrace();
+		} catch (BadPaddingException e1) {
+			e1.printStackTrace();
+		} catch (RestClientException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override

@@ -38,7 +38,6 @@ public class MessageRequest {
 				System.out.println("Encrypted value:" + enc + "    key:" + key);
 				this.elements.put(key, enc);
 			}
-
 		}
 	}
 

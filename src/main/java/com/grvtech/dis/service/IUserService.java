@@ -22,4 +22,8 @@ public interface IUserService {
 	void deleteUser(int iduser);
 
 	void process();
+
+	User getUserByEmailPassword(String email, String password);
+
+	void addUserToCore(User user);
 }

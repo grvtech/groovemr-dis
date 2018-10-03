@@ -44,10 +44,11 @@ public class UserRepository {
 	}
 
 	public User findById(long iduser) {
-		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query("select * from user where iduser='" + iduser + "'",
-				new BeanPropertyRowMapper<User>(User.class));
-		// User user = jdbcTemplate.queryForObject("select * from user where iduser=?",
-		// new Object[] { iduser }, new BeanPropertyRowMapper<User>(User.class));
+		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query("select * from user where iduser='" + iduser + "'", new BeanPropertyRowMapper<User>(User.class));
+		// User user = jdbcTemplate.queryForObject("select * from user where
+		// iduser=?",
+		// new Object[] { iduser }, new
+		// BeanPropertyRowMapper<User>(User.class));
 		User user = new User();
 		if (users.size() > 0) {
 			user = users.get(0);
@@ -57,11 +58,18 @@ public class UserRepository {
 
 	/* username and password */
 	public User findByUP(String username, String password) {
-		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query(
-				"select * from user where username='" + username + "' and password = '" + password + "'",
-				new BeanPropertyRowMapper<User>(User.class));
-		// User user = jdbcTemplate.queryForObject("select * from user where iduser=?",
-		// new Object[] { iduser }, new BeanPropertyRowMapper<User>(User.class));
+		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query("select * from user where username='" + username + "' and password = '" + password + "'", new BeanPropertyRowMapper<User>(
+				User.class));
+		User user = new User();
+		if (users.size() > 0) {
+			user = users.get(0);
+		}
+		return user;
+	}
+
+	/* email and password */
+	public User findByEP(String email, String password) {
+		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query("select * from user where email='" + email + "' and password = '" + password + "'", new BeanPropertyRowMapper<User>(User.class));
 		User user = new User();
 		if (users.size() > 0) {
 			user = users.get(0);
@@ -71,11 +79,11 @@ public class UserRepository {
 
 	/* username and pin */
 	public User findByUPin(String username, String pin) {
-		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query(
-				"select * from user where username='" + username + "' and pin = '" + pin + "'",
-				new BeanPropertyRowMapper<User>(User.class));
-		// User user = jdbcTemplate.queryForObject("select * from user where iduser=?",
-		// new Object[] { iduser }, new BeanPropertyRowMapper<User>(User.class));
+		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query("select * from user where username='" + username + "' and pin = '" + pin + "'", new BeanPropertyRowMapper<User>(User.class));
+		// User user = jdbcTemplate.queryForObject("select * from user where
+		// iduser=?",
+		// new Object[] { iduser }, new
+		// BeanPropertyRowMapper<User>(User.class));
 		User user = new User();
 		if (users.size() > 0) {
 			user = users.get(0);
@@ -85,11 +93,12 @@ public class UserRepository {
 
 	/* username and pin */
 	public User findByUI(String username, String securityimage) {
-		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query(
-				"select * from user where username='" + username + "' and securityimage = '" + securityimage + "'",
+		ArrayList<User> users = (ArrayList<User>) jdbcTemplate.query("select * from user where username='" + username + "' and securityimage = '" + securityimage + "'",
 				new BeanPropertyRowMapper<User>(User.class));
-		// User user = jdbcTemplate.queryForObject("select * from user where iduser=?",
-		// new Object[] { iduser }, new BeanPropertyRowMapper<User>(User.class));
+		// User user = jdbcTemplate.queryForObject("select * from user where
+		// iduser=?",
+		// new Object[] { iduser }, new
+		// BeanPropertyRowMapper<User>(User.class));
 		User user = new User();
 		if (users.size() > 0) {
 			user = users.get(0);
@@ -98,23 +107,17 @@ public class UserRepository {
 	}
 
 	public int deleteById(long iduser) {
-		return jdbcTemplate.update("delete from user where iduser=?", new Object[] { iduser });
+		return jdbcTemplate.update("delete from user where iduser=?", new Object[]{iduser});
 	}
 
 	public int insert(User user) {
-		return jdbcTemplate.update(
-				"insert into user (iduser, uuidperson,uuiduser, username, password, pin, logo, securityimage, email ) "
-						+ "values(?, ?, ?, ?, ?, ?, ?, ?)",
-				new Object[] { user.getIduser(), user.getUuidperson(), user.getUuiduser(), user.getUsername(),
-						user.getPassword(), user.getPin(), user.getLogo(), user.getSecurityimage(), user.getEmail() });
+		return jdbcTemplate.update("insert into user ( uuidperson,uuiduser, username, password, pin, logo, securityimage, email ) " + "values(?, ?, ?, ?, ?, ?, ?, ?)", new Object[]{user
+				.getUuidperson(), user.getUuiduser(), user.getUsername(), user.getPassword(), user.getPin(), user.getLogo(), user.getSecurityimage(), user.getEmail()});
 	}
 
 	public int update(User user) {
-		return jdbcTemplate.update(
-				"update user " + " set username = ?, password = ?, pin = ?, logo= ?, securityimage = ?, email = ? "
-						+ " where iduser = ?",
-				new Object[] { user.getUsername(), user.getPassword(), user.getPin(), user.getLogo(),
-						user.getSecurityimage(), user.getEmail(), user.getIduser() });
+		return jdbcTemplate.update("update user " + " set username = ?, password = ?, pin = ?, logo= ?, securityimage = ?, email = ? " + " where iduser = ?", new Object[]{user.getUsername(), user
+				.getPassword(), user.getPin(), user.getLogo(), user.getSecurityimage(), user.getEmail(), user.getIduser()});
 	}
 
 }

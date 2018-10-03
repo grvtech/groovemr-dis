@@ -5,7 +5,8 @@ function GRVLogin(object){
 		Survey.StylesManager.applyTheme("bootstrap");
 		var loginForm = new Survey.Model(object.surveyLogin);
 		loginForm.showQuestionNumbers = 'off';
-		loginForm.showCompletedPage = false;
+		loginForm.showCompletedPage = true;
+		loginForm.completedHtml = "Logging in...";
 		loginForm.requiredText = '';
 		loginForm.locale = pageLanguage;
 		pageForms.push(loginForm);
@@ -23,7 +24,9 @@ function GRVLogin(object){
 				            var mresp = new GRVMessageResponse(data);
 				            if (mresp.status == "error"){
 				            	localiseObject(mresp);
-				            	options.errors = mresp.elements;
+				            	options.errors = mresp.elements.error;
+				            }else{
+				            	
 				            }
 				            //tell survey that we are done with the server validation
 				            options.complete();
@@ -46,39 +49,48 @@ function GRVLogin(object){
 			$('.grv-subscribe-container').remove();
 			$('.grv-forgot-container').remove();
 			var subscribeFormContainer = $('<div>',{class:'grv grv-subscribe-container shadow border'}).appendTo(target);
+			
 			Survey.StylesManager.applyTheme("bootstrap");
 			var subscribeForm = new Survey.Model(object.surveySubscribe);
 			subscribeForm.showQuestionNumbers = 'off';
 			subscribeForm.showCompletedPage = true;
+			
 			subscribeForm.requiredText = '';
 			subscribeForm.locale = pageLanguage;
+			subscribeForm.completedHtml = "Logging in..."
 			pageForms.push(subscribeForm);
-			subscribeForm.onComplete.add(function (survey,options){
-				var resultAsString = JSON.stringify(survey.data);
-				alert(resultAsString);
-				
-				/*
-				var mr = new GRVMessageRequest(survey.data,true);
-				console.log(mr);
-				var xhr = new XMLHttpRequest();
-			    xhr.open("POST", "http://localhost:8090/login", true);
-			    xhr.setRequestHeader("Content-Type", "application/json");
-			    var dataStringify = JSON.stringify(mr);
-			    xhr.onreadystatechange = function () {
-			        if (xhr.readyState === 4 && xhr.status === 200) {
-			            var json = JSON.parse(xhr.responseText);
-			            console.log(json);
-			        }
-			    };
-			    xhr.send(dataStringify);
-			    */
-			 });
-			subscribeFormContainer.Survey({model:subscribeForm,onComplete:this.sendSubscribeDataToServer});
+			
+			subscribeFormContainer.Survey({model:subscribeForm,onServerValidateQuestions:function(survey,options){
+				var url = getPageObject();
+				var mr = new GRVMessageRequest(survey.data,'subscribe','',true);
+				//call the ajax method
+			    $.ajax({
+	    			url: url.origin+"/login/subscribe",
+	    			type: 'post',
+	                dataType: 'json',
+	                contentType: 'application/json',
+	                data: JSON.stringify(mr)
+	    		}).then(function (data) {
+			            var mresp = new GRVMessageResponse(data);
+			            if (mresp.status == "error"){
+			            	localiseObject(mresp);
+			            	options.errors = mresp.elements.error;
+			            }else{
+			            	
+			            }
+			            //tell survey that we are done with the server validation
+			            options.complete();
+			       });
+			},onComplete:function(survey,options){
+				//window.location = "/user";
+			}});
+
 			var subscribeCancel = $('<div>',{class:'btn btn-secondary'}).text('i18n:cancel_btn').insertBefore($('.grv-subscribe-container .sv_complete_btn'));
 			subscribeCancel.click({target:target},function(event){
 				$('.grv-subscribe-container').remove();
 				event.data.target.find('.grv').show();
 			});
+			
 			deployLanguage();
 		});
 		

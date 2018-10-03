@@ -1,11 +1,13 @@
 package com.grvtech.dis.model;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 public class ClientMessageResponse {
 	private String status; // success | error
 	private String timestamp;
 	private String message;
 	private String state;
-	private String elements;
+	private ObjectNode elements;
 
 	/**
 	 * @return the status
@@ -70,7 +72,7 @@ public class ClientMessageResponse {
 	/**
 	 * @return the elements
 	 */
-	public String getElements() {
+	public ObjectNode getElements() {
 		return elements;
 	}
 
@@ -78,11 +80,11 @@ public class ClientMessageResponse {
 	 * @param elements
 	 *            the elements to set
 	 */
-	public void setElements(String elements) {
+	public void setElements(ObjectNode elements) {
 		this.elements = elements;
 	}
 
-	public ClientMessageResponse(String status, String timestamp, String message, String state, String elements) {
+	public ClientMessageResponse(String status, String timestamp, String message, String state, ObjectNode elements) {
 		super();
 		this.status = status;
 		this.timestamp = timestamp;

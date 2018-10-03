@@ -1,6 +1,5 @@
 package com.grvtech.dis.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +14,7 @@ public class SessionService implements ISessionService {
 
 	@Autowired
 	SessionRepository repository;
-	
+
 	@Override
 	public List<Session> getAllActiveSessions() {
 		return repository.findAllActive();
@@ -29,28 +28,27 @@ public class SessionService implements ISessionService {
 	@Override
 	public boolean addSession(Session session) {
 		boolean result = false;
-		if(repository.insert(session) > 0) result = true;
+		if (repository.insert(session) > 0)
+			result = true;
 		return result;
 	}
 
 	@Override
-	public void updateSession(Session session) {
-		repository.update(session);
-
-	}
-
-	@Override
 	public void deleteSession(UUID idSession) {
-
 
 	}
 
 	@Override
 	public boolean expireSession(Session Session) {
 		boolean result = false;
-		Session.setEndsession(new Date());
-		if(repository.update(Session) > 0 )result = true;
+
 		return result;
+	}
+
+	@Override
+	public void updateSession(Session Session) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,8 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.grvtech.dis.model.ClientMessageRequest;
 import com.grvtech.dis.model.ClientMessageResponse;
+import com.grvtech.dis.model.Session;
 import com.grvtech.dis.model.User;
 import com.grvtech.dis.repository.UserRepository;
 import com.grvtech.dis.service.UserService;
@@ -115,13 +118,21 @@ public class LoginController {
 				error1.put("username", "i18n:wrongusername_txt");
 				error1.put("password", "i18n:wrongpassword_txt");
 				String base64 = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(error1));
-				mresp.setElements(base64);
+				ObjectNode obj = mapper.createObjectNode();
+				obj.put("error", base64);
+				mresp.setElements(obj);
 			} else {
+				Session sess = new Session(user.getUuiduser());
 				mresp.setState("enc");
 				mresp.setStatus("success");
 				mresp.setMessage("this is  message");
 				mresp.setTimestamp(sdf.format(new Date()));
-				mresp.setElements(mapper.writeValueAsString(user));
+				ObjectNode obj = mapper.createObjectNode();
+				String base64User = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(user));
+				obj.put("user", base64User);
+				String base64Session = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(sess));
+				obj.put("session", base64Session);
+				mresp.setElements(obj);
 			}
 		} catch (JsonParseException e1) {
 			e1.printStackTrace();
@@ -134,17 +145,52 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = {"/login/subscribe"}, method = RequestMethod.POST)
-	public ModelAndView subscribe() {
+	public ClientMessageResponse subscribe(final HttpServletRequest request) {
+		ClientMessageResponse cmr = new ClientMessageResponse();
+		new ObjectMapper();
+		new SimpleDateFormat("yyyMMddhhmmss");
+		JsonNode jn = HttpUtil.getJSONFromPost(request);
+		try {
+			ClientMessageRequest mr = new ClientMessageRequest(jn);
+			mr.getElements().get("fname").asText();
+			mr.getElements().get("lname").asText();
+			String email = mr.getElements().get("email").asText();
+			String username = mr.getElements().get("username").asText();
+			String password = mr.getElements().get("password").asText();
 
-		// RestTemplate restTemplate = new RestTemplate();
-		// User user = restTemplate.getForObject("http://localhost:8080/login",
-		// User.class);
+			User user = userService.getUserByEmailPassword(email, password);
+			if (user.isEmpty()) {
+				user = userService.getUserByUsernamePassword(username, password);
+				if (user.isEmpty()) {
+					// good create user
+					user = new User(0, UUID.randomUUID(), UUID.randomUUID(), username, password, email, "1234", "aaa", "aaa", "aaaa");
+					if (userService.addUser(user)) {
+						userService.addUserToCore(user);
+					}
 
-		ModelAndView modelAndView = new ModelAndView();
-		// modelAndView.addObject("username", user.getUsername());
-		// modelAndView.addObject("password", user.getPassword());
-		modelAndView.setViewName("index");
-		return modelAndView;
+				} else {
+					// add username error
+				}
+			} else {
+				// add email error
+			}
+
+			// TODO verify if is not a person as well
+
+			/*
+			 * validations for subscribe : 1. verify username is not already
+			 * entered 2. verify email is not already entered
+			 */
+
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return cmr;
 	}
 
 	@RequestMapping(value = {"/login/forgot"}, method = RequestMethod.POST)
