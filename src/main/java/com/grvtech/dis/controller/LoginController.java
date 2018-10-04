@@ -165,6 +165,7 @@ public class LoginController {
 					// good create user
 					user = new User(0, UUID.randomUUID(), UUID.randomUUID(), username, password, email, "1234", "aaa", "aaa", "aaaa");
 					if (userService.addUser(user)) {
+						userService.process();
 						userService.addUserToCore(user);
 					}
 
