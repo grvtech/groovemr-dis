@@ -5,28 +5,9 @@
 <div >
     <div th:fragment="index-template" class="wrap index-page">
 
-	    <div class="grv-header shadow">
-	    	<div class="grv-menubtn"><i class="fas fa-bars"></i></div>
-	    	<div class="grv-logo">a</div>
-	    	<div class="grv-search">search</div>
-	    	<div class="grv-pils">
-	    	
-		    	<div class="navbar">
-				  <div class="button">
-				    <i class="fa fa-globe"></i>
-				    <span class="button__badge">2</span>
-				  </div>
-				  <div class="button">
-				    <i class="fa fa-comments"></i>
-				    <span class="button__badge">4</span>
-				  </div>
-				</div>
-				
-	    	</div> <!-- container for fills like messages notifications alerts -->
-	    	<div class="grv-menu"></div>
+	    <div class="grv-header">
+	    	<div class="grv-search"></div>
 	    	<div class="grv-language"></div>
-	    	<div class="grv-settings"><i class="fas fa-cog"></i></div>
-	    	
 	    </div>
 	    <div class="grv-main ">
 		    <div class="index-column index-col1">
@@ -44,27 +25,17 @@
     
     <div th:fragment="user-template" class="wrap user-page">
 	    <div class="grv-header shadow">
-	    	<div class="grv-menubtn"><i class="fas fa-bars"></i></div>
+	    	<div class="grv-linesbtn"><i class="fas fa-bars"></i></div>
 	    	<div class="grv-logo">a</div>
 	    	<div class="grv-search">search</div>
+	    	<div class="grv-topmenu"></div>
 	    	<div class="grv-pils">
-	    	
-		    	<div class="navbar">
-				  <div class="button">
-				    <i class="fa fa-globe"></i>
-				    <span class="button__badge">2</span>
-				  </div>
-				  <div class="button">
-				    <i class="fa fa-comments"></i>
-				    <span class="button__badge">4</span>
-				  </div>
+		    	<div class="pilbar">
+				  <div class="pil"><i class="fa fa-globe"></i><span class="button__badge">35</span></div>
+				  <div class="pil"><i class="fa fa-comments"></i><span class="button__badge">4</span></div>
 				</div>
-				
 	    	</div> <!-- container for fills like messages notifications alerts -->
-	    	<div class="grv-menu"></div>
-	    	<div class="grv-language"></div>
 	    	<div class="grv-settings"><i class="fas fa-cog"></i></div>
-	    	
 	    </div>
 	    <div class="grv-main"></div>
 		<div class="grvinfo"></div>
