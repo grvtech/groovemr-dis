@@ -1,0 +1,36 @@
+{
+	"patients":[
+		{
+			"firstname":"Radu",
+			"lastname":"Gabor",
+			"ramq":"ABCD12341234",
+			"chart":"11234",
+			"community":"Alba Iulia",
+			"mid":"123454321"
+		},
+		{
+			"firstname":"Radu",
+			"lastname":"Gabor",
+			"ramq":"EFGH12341234",
+			"chart":"21234",
+			"community":"Chisasibi",
+			"mid":"123454321"
+		},
+		{
+			"firstname":"Radu",
+			"lastname":"Gabor",
+			"ramq":"IJKL12341234",
+			"chart":"31234",
+			"community":"Laval",
+			"mid":"123454321"
+		},
+		{
+			"firstname":"Radu",
+			"lastname":"Gabor",
+			"ramq":"MNOP12341234",
+			"chart":"41234",
+			"community":"Montreal",
+			"mid":"123454321"
+		}
+	]
+}

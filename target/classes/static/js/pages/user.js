@@ -1,3 +1,4 @@
+/*
 var langFileLoaded = false;
 var languageObject = null;
 var pageLanguage = $('html').attr('lang');
@@ -96,7 +97,7 @@ deployLanguage();
     }
   }, 10000);
 
-*/
+
 
 
 
@@ -165,7 +166,7 @@ $(window).bind('resize', function(event, ui) {
 
 
 
-/*messages functions*/
+
 
 
 
@@ -226,6 +227,10 @@ class Message{
 }
 
 
+*/
+
+
+var search = new GRVSearch(ob);
 
 
 
