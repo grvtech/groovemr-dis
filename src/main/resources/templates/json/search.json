@@ -1,5 +1,4 @@
-{
-	"patients":[
+[
 		{
 			"firstname":"Radu",
 			"lastname":"Gabor",
@@ -32,5 +31,4 @@
 			"community":"Montreal",
 			"mid":"123454321"
 		}
-	]
-}
+]
