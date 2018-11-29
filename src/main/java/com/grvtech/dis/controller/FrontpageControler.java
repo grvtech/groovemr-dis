@@ -49,7 +49,7 @@ public class FrontpageControler {
 		 * restTemplate.getForObject("http://localhost:8080/user/2", //
 		 * User.class);
 		 */
-
+		System.out.println("aaaa");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("index");
 
