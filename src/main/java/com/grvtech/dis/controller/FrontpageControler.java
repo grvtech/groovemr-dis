@@ -14,7 +14,7 @@ public class FrontpageControler {
 	@Autowired
 	UserRepository repository;
 	@Autowired
-	//FrontpageService frontpageService;
+	// FrontpageService frontpageService;
 
 	@RequestMapping(value = {"/frontpage/get"}, method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -52,7 +52,7 @@ public class FrontpageControler {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("index");
-		
+
 		return modelAndView;
 	}
 }
