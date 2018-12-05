@@ -32,7 +32,7 @@ class GRVLanguage{
 	}
 }
 */
-function GRVLanguage(configObject){
+function GRVlanguage(configObject){
 		this.config = configObject;
 		this.container = $(configObject.container);
 		this.dropdown = $('<div>',{class:'dropdown'}).appendTo(this.container);

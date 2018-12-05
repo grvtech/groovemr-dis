@@ -29,7 +29,7 @@ class GRVFrontPage{
 }
 */
 
-function GRVFrontPage(object){
+function GRVfrontpage(object){
 	if(object.elements.length > 0){
 		this.container = $(object.container);
 		this.frontpageWidget = $('<div>',{class:'grv grv-frontpage-container shadow border carousel slide','data-ride':'carousel','data-interval':10000}).appendTo(this.container);

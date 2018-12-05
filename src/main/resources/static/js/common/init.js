@@ -1,3 +1,0 @@
-/*index*/
-//loadLanguage(pageLanguage);
-deployLanguage();

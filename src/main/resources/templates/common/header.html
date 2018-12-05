@@ -24,18 +24,21 @@
 
 
 <head th:fragment="index-header">
+    <link rel="stylesheet" th:href="@{/css/pages/index.css}" href="../../css/pages/index.css" />
+    <!-- login module -->
     <link rel="stylesheet" th:href="@{/css/model/login.css}" href="../../css/model/login.css" />
-    <link rel="stylesheet" th:href="@{/css/model/frontpage.css}" href="../../css/model/frontpage.css" />
-    <link rel="stylesheet" th:href="@{/css/index.css}" href="../../css/pages/index.css" />
     <script th:href="@{/js/model/login.js}" src="../../js/model/login.js"></script>
+    <!-- frontpage module -->
+    <link rel="stylesheet" th:href="@{/css/model/frontpage.css}" href="../../css/model/frontpage.css" />
     <script th:href="@{/js/model/frontpage.js}" src="../../js/model/frontpage.js"></script>
 </head>
 
 
 <head th:fragment="user-header">
     <link rel="stylesheet" th:href="@{/css/pages/user.css}" href="../../css/pages/user.css" />
-    <link rel="stylesheet" th:href="@{/css/model/search.css}" href="../../css/model/search.css" />
-    <script th:href="@{/js/model/search.js}" src="../../js/model/search.js"></script>
+    <!-- search app -->
+    <link rel="stylesheet" th:href="@{/apps/searcher/css/index.css}" href="../../apps/searcher/css/index.css" />
+    <script th:href="@{/apps/searcher/js/index.js}" src="../../apps/searcher/js/index.js"></script>
 </head>
 
 

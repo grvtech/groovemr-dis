@@ -1,15 +1,4 @@
-var ob = {
-		"container":".grv-search",
-		"title":"Search patient",
-		"criteria":[
-			{"label":"RAMQ","value":"ramq","default":"0"},
-			{"label":"Chart Number","value":"chart","default":"0"},
-			{"label":"Index Patient","value":"qia","default":"1"},
-			{"label":"Full name","value":"lname_and_fname","default":"0"}
-		]
-};
-
-function GRVSearch(object){
+function GRVsearch(object){
 	var inHeader = false;
 	this.container = $(object.container);
 	if(this.container.parent().hasClass('grv-header')){inHeader = true;}

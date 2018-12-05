@@ -129,8 +129,6 @@ function fetchData(url,dataArray, callback){
 } 
 
 
-
-
 function fetchConfig(configName,callback){
 	var jqxhr = $.getJSON( "js/config/"+configName+".json", function(object) {
 		if (callback && typeof(callback) === "function") {
@@ -138,9 +136,19 @@ function fetchConfig(configName,callback){
 	    }
 		console.log( "success load config file" );
 	}).fail(function(xhr, textStatus, errorThrown) {
-	    console.log( "error loading language object" );
+	    console.log( "error loading config object "+configName );
 	    console.log(errorThrown);
 	})
 }
 
 
+/*this function is called to load the configs on the page based on the template
+ * the function scans 2 elements in the page grv-core and grv-apps and loads the apps in those containers
+ * 
+ * */
+function initpage(){
+	$('div[id^="grv-"]').each(function(index,obj){
+		var objName = $(obj).attr('id').substring(4);
+		fetchConfig(objName,eval('GRV'+objName));
+	});
+}

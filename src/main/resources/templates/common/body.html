@@ -4,23 +4,22 @@
 <body>
 <div >
     <div th:fragment="index-template" class="wrap index-page">
-
-	    <div class="grv-header">
-	    	<div class="grv-search"></div>
-	    	<div class="grv-language"></div>
-	    </div>
+	    <div class="grv-header"></div>
 	    <div class="grv-main ">
 		    <div class="coloana col1">
 		    	<div class="grv-logo">a</div>
-		    	<div class="login"></div>
+		    	<div class="login">a</div>
 		    </div>
 		    <div class="coloana col2">
-		    	<div class="grv-logo">&nbsp;</div>
-			    <div class="frontpage"></div>
+		    	<div class="grv-logo">&nbsp;aaa</div>
+		    	<div class="frontpage"></div>
 		    </div>
 		    <div class="coloana col3"></div>
 	    </div>
-		<div class="grvinfo"></div>
+	    <div class="grvinfo"></div>
+	    <div id="grv-frontpage"></div>
+	    <div id="grv-login"></div>
+		<div id="grv-info"></div>
     </div>
     
     <div th:fragment="user-template" class="wrap user-page">
@@ -39,14 +38,15 @@
 	    </div>
 	    <div class="grv-main">
 	    	<div class='coloana'>
-	    		<div class="grv-search"></div>
-	    		<div class="grv-apps">aaa</div>
-	    		<div class="grv-messages">aaa</div>
-	    		<div class="grv-stats">aaa</div>
+	    		<!-- the template will control the view of the page manually for the moment -->
+	    		<!-- the position of apps in the page will be fixed for the moment -->
+    			<div class="search"></div>
 	    	</div>
-	    	
 	    </div>
-		<div class="grvinfo"></div>
+	    <div id="grv-search"></div>
+    	<div id="grv-messages"></div>
+    	<div id="grv-stats"></div>
+		<div id="grv-info"></div>
     </div>
     
     

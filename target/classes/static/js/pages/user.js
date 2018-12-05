@@ -230,7 +230,9 @@ class Message{
 */
 
 
-var search = new GRVSearch(ob);
+//var search = new GRVSearch(ob);
+
+initpage();
 
 
 

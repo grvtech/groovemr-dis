@@ -1,4 +1,4 @@
-function GRVLogin(object){
+function GRVlogin(object){
 		this.container = $(object.container);
 		this.loginContainer = $('<div>',{class:'grv grv-login-container shadow border'}).appendTo(this.container);
 		this.loginWidget = $('<div>',{class:'grv-widget grv-login',id:'loginWidget'}).appendTo(this.loginContainer);
