@@ -1,4 +1,4 @@
-function GRVsearch(object){
+function GRVpatientsearch(object){
 	var inHeader = false;
 	this.container = $(object.container);
 	if(this.container.parent().hasClass('grv-header')){inHeader = true;}

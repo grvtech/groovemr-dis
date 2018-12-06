@@ -130,7 +130,7 @@ function fetchData(url,dataArray, callback){
 
 
 function fetchConfig(configName,callback){
-	var jqxhr = $.getJSON( "js/config/"+configName+".json", function(object) {
+	var jqxhr = $.getJSON( "/apps/"+configName+"/config.json", function(object) {
 		if (callback && typeof(callback) === "function") {
 			callback(object);
 	    }
@@ -140,7 +140,6 @@ function fetchConfig(configName,callback){
 	    console.log(errorThrown);
 	})
 }
-
 
 /*this function is called to load the configs on the page based on the template
  * the function scans 2 elements in the page grv-core and grv-apps and loads the apps in those containers
