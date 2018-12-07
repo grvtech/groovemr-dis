@@ -28,25 +28,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * */
 
 public class ClientMessageRequest {
-	private String state;
-	private String action;
-	private UUID uuidsession;
 	private Date timestamp;
+	private String action;
+	private String state;
 	private JsonNode elements;
 
 	public ClientMessageRequest(JsonNode jn) throws ParseException, JsonParseException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyMMddhhmmss");
+		new SimpleDateFormat("yyyMMddhhmmss");
 		// JsonNode jn = HttpUtil.getJSONFromPost(request);
-		this.state = jn.get("state").toString().replaceAll("\"", "");
-		this.action = jn.get("action").toString().replaceAll("\"", "");
-		String uuid = jn.get("uuidsession").toString().replaceAll("\"", "");
-		if (uuid.equals("")) {
-			this.uuidsession = null;
-		} else {
-			this.uuidsession = UUID.fromString(uuid);
-		}
-		this.timestamp = sdf.parse(jn.get("timestamp").toString().replaceAll("\"", ""));
+		this.state = jn.get("state").asText();
+		this.action = jn.get("action").asText();
+		this.timestamp = new Date(jn.get("timestamp").asLong());
 		String elems = "";
 		if (this.state.equals("enc")) {
 			elems = new String(Base64.getDecoder().decode(jn.get("elements").toString().replaceAll("\"", "")));
@@ -58,11 +51,10 @@ public class ClientMessageRequest {
 		this.elements = mapper.readTree(parser);
 	}
 
-	public ClientMessageRequest(String state, String action, UUID uuidsession, Date timestamp, JsonNode elements) {
+	public ClientMessageRequest(String state, String action, Date timestamp, JsonNode elements) {
 		super();
 		this.state = state;
 		this.action = action;
-		this.uuidsession = uuidsession;
 		this.timestamp = timestamp;
 		this.elements = elements;
 	}

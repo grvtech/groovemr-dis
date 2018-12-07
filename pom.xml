@@ -102,7 +102,12 @@
 		    <artifactId>jqplot</artifactId>
 		    <version>1.0.8r1250</version>
 		</dependency>
-		
+		<!-- https://mvnrepository.com/artifact/org.webjars/momentjs -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>momentjs</artifactId>
+			<version>2.22.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
