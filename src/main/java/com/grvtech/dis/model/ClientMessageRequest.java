@@ -2,61 +2,59 @@ package com.grvtech.dis.model;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
+import java.util.Iterator;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-/*
- * MessageRequest Format
- * {
- * 	uuidmessage
- * 	uuidorganization
- *  uuidsession
- *  state enc|clear
- * 	elements
- * 
- * 
- * }
- * 
- * */
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.grvtech.dis.util.xxtea.XXTEA;
 
 public class ClientMessageRequest {
-	private Date timestamp;
+	private UUID uuidsession;
 	private String action;
-	private String state;
-	private JsonNode elements;
+	private String state; // should always be encrypted ??? enc|clear
+	private ObjectNode elements;
 
 	public ClientMessageRequest(JsonNode jn) throws ParseException, JsonParseException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		new SimpleDateFormat("yyyMMddhhmmss");
-		// JsonNode jn = HttpUtil.getJSONFromPost(request);
+		if (!jn.get("state").isMissingNode()) {
+			this.state = jn.get("state").asText();
+		} else {
+			this.state = "enc"; // always enc by default
+		}
 		this.state = jn.get("state").asText();
 		this.action = jn.get("action").asText();
-		this.timestamp = new Date(jn.get("timestamp").asLong());
-		String elems = "";
+		this.uuidsession = UUID.fromString(jn.get("uuidsession").asText());
+		JsonNode elems = jn.get("elements");
+		this.elements = mapper.createObjectNode();
 		if (this.state.equals("enc")) {
-			elems = new String(Base64.getDecoder().decode(jn.get("elements").toString().replaceAll("\"", "")));
+			Iterator<String> fieldNames = elems.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, XXTEA.decryptBase64StringToString(elems.get(fieldName).asText(), this.action));
+			}
+			// elems = new
+			// String(Base64.getDecoder().decode(jn.get("elements").toString().replaceAll("\"",
+			// "")));
 		} else {
-			elems = jn.get("elements").toString().replaceAll("\\\\", "").replaceAll("^\"(.*)\"$", "$1");
+			// elems = jn.get("elements").toString().replaceAll("\\\\",
+			// "").replaceAll("^\"(.*)\"$", "$1");
+			Iterator<String> fieldNames = elems.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, elems.get(fieldName).asText());
+			}
 		}
-		JsonFactory factory = mapper.getFactory();
-		JsonParser parser = factory.createParser(elems);
-		this.elements = mapper.readTree(parser);
 	}
 
-	public ClientMessageRequest(String state, String action, Date timestamp, JsonNode elements) {
+	public ClientMessageRequest(String state, String action, ObjectNode elements, UUID uuidsession) {
 		super();
 		this.state = state;
 		this.action = action;
-		this.timestamp = timestamp;
 		this.elements = elements;
+		this.uuidsession = uuidsession;
 	}
 
 	public ClientMessageRequest() {
@@ -109,21 +107,6 @@ public class ClientMessageRequest {
 	}
 
 	/**
-	 * @return the timestamp
-	 */
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	/**
-	 * @param timestamp
-	 *            the timestamp to set
-	 */
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	/**
 	 * @return the elements
 	 */
 	public JsonNode getElements() {
@@ -134,7 +117,7 @@ public class ClientMessageRequest {
 	 * @param elements
 	 *            the elements to set
 	 */
-	public void setElements(JsonNode elements) {
+	public void setElements(ObjectNode elements) {
 		this.elements = elements;
 	}
 

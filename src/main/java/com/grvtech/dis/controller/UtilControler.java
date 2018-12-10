@@ -1,6 +1,9 @@
 package com.grvtech.dis.controller;
 
-import java.util.Base64;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,24 +17,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.grvtech.dis.model.ClientMessageRequest;
 import com.grvtech.dis.model.ClientMessageResponse;
+import com.grvtech.dis.model.administration.Organization;
+import com.grvtech.dis.service.administration.IOrganizationService;
 import com.grvtech.dis.util.HttpUtil;
 
 @RestController
 public class UtilControler {
 
+	@Autowired
+	IOrganizationService orgservice;
+
 	@RequestMapping(value = {"/util/licence"}, method = RequestMethod.POST)
 	public ClientMessageResponse getLicence(final HttpServletRequest request) {
-		JsonNode jn = HttpUtil.getJSONFromPost(request);
-		ClientMessageRequest cmreq = new ClientMessageRequest(jn);
-		Organization org = 
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode objNode = mapper.createObjectNode();
 		ClientMessageResponse cmr = new ClientMessageResponse();
-		cmr.setStatus("success");
-		cmr.setState("clear");
-		String license = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(sess));
-		objNode.put("licence", v)
-		cmr.set
+		ClientMessageRequest cmreq = new ClientMessageRequest();
+		try {
+			JsonNode jn = HttpUtil.getJSONFromPost(request);
+			cmreq = new ClientMessageRequest(jn);
+			Organization organization = orgservice.getOrganizationByUUID(UUID.fromString(cmreq.getElements().get("uuidorganization").asText()));
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode objNode = mapper.createObjectNode();
+			cmr.setStatus("success");
+			cmr.setState("enc");
+			cmr.setAction(cmreq.getAction());
+			// String license =
+			// Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(sess));
+			objNode.put("licence", organization.getLicence());
+			cmr.setElements(objNode);
+
+		} catch (ParseException | IOException e) {
+			HashMap<String, String> messages = new HashMap<>();
+			messages.put("error-" + cmr.getAction(), "error-" + cmr.getAction());
+			return new ClientMessageResponse(false, cmreq, messages);
+			// e.printStackTrace();
+		}
 		return cmr;
 	}
 

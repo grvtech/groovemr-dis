@@ -1,13 +1,34 @@
 package com.grvtech.dis.model;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.grvtech.dis.util.xxtea.XXTEA;
 
 public class ClientMessageResponse {
 	private String status; // success | error
-	private String timestamp;
-	private String message;
 	private String state;
+	private String action;
 	private ObjectNode elements;
+
+	/**
+	 * @return the action
+	 */
+	public String getAction() {
+		return action;
+	}
+
+	/**
+	 * @param action
+	 *            the action to set
+	 */
+	public void setAction(String action) {
+		this.action = action;
+	}
 
 	/**
 	 * @return the status
@@ -22,36 +43,6 @@ public class ClientMessageResponse {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	/**
-	 * @return the timestamp
-	 */
-	public String getTimestamp() {
-		return timestamp;
-	}
-
-	/**
-	 * @param timestamp
-	 *            the timestamp to set
-	 */
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	/**
-	 * @return the message
-	 */
-	public String getMessage() {
-		return message;
-	}
-
-	/**
-	 * @param message
-	 *            the message to set
-	 */
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	/**
@@ -81,16 +72,85 @@ public class ClientMessageResponse {
 	 *            the elements to set
 	 */
 	public void setElements(ObjectNode elements) {
-		this.elements = elements;
+		// this.elements = elements;
+		ObjectMapper mapper = new ObjectMapper();
+		this.elements = mapper.createObjectNode();
+		if (this.state.equals("enc")) {
+			Iterator<String> fieldNames = elements.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, XXTEA.encryptToBase64String(elements.get(fieldName).asText(), this.action));
+			}
+		} else {
+			Iterator<String> fieldNames = elements.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, elements.get(fieldName).asText());
+			}
+		}
+
 	}
 
-	public ClientMessageResponse(String status, String timestamp, String message, String state, ObjectNode elements) {
+	public ClientMessageResponse(String status, String state, String action, ObjectNode elements) {
 		super();
+		ObjectMapper mapper = new ObjectMapper();
 		this.status = status;
-		this.timestamp = timestamp;
-		this.message = message;
 		this.state = state;
-		this.elements = elements;
+		this.action = action;
+		// this.elements = elements;
+
+		this.elements = mapper.createObjectNode();
+		if (this.state.equals("enc")) {
+			Iterator<String> fieldNames = elements.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, XXTEA.encryptToBase64String(elements.get(fieldName).asText(), this.action));
+			}
+		} else {
+			Iterator<String> fieldNames = elements.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, elements.get(fieldName).asText());
+			}
+		}
+	}
+
+	public ClientMessageResponse(boolean status, ClientMessageRequest request, HashMap<String, String> messages) {
+		super();
+		ObjectMapper mapper = new ObjectMapper();
+		if (status) {
+			this.status = "success";
+		} else {
+			this.status = "error";
+		}
+		this.state = request.getState();
+		this.action = request.getAction();
+		JsonNode elements = request.getElements();
+		this.elements = mapper.createObjectNode();
+		if (this.state.equals("enc")) {
+			Iterator<String> fieldNames = elements.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, XXTEA.encryptToBase64String(elements.get(fieldName).asText(), this.action));
+			}
+		} else {
+			Iterator<String> fieldNames = elements.fieldNames();
+			while (fieldNames.hasNext()) {
+				String fieldName = fieldNames.next();
+				this.elements.put(fieldName, elements.get(fieldName).asText());
+			}
+		}
+		if (messages != null && !messages.isEmpty()) {
+			Set<String> keys = messages.keySet();
+			for (String key : keys) {
+				if (this.state.equals("enc")) {
+					this.elements.put(key, XXTEA.encryptToBase64String(messages.get(key), this.action));
+				} else {
+					this.elements.put(key, messages.get(key));
+				}
+			}
+		}
+
 	}
 
 	public ClientMessageResponse() {
