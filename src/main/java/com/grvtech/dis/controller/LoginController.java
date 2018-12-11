@@ -3,8 +3,6 @@ package com.grvtech.dis.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -36,12 +34,11 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = {"/", "/index.html", "/radu/gabor", "/radu/index.html"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/index.html", "/index.grvemr", "/dis/index.html"}, method = RequestMethod.GET)
 	public ModelAndView index() {
-		User user = repository.findById(2);
+
 		/*
-		 * 
-		 * if (user.isEmpty()) {
+		 * User user = repository.findById(2); if (user.isEmpty()) {
 		 * System.out.println("-----------------------------------------");
 		 * System.out.println("The user 2 is NOT in memory db : NON");
 		 * System.out.println("-----------------------------------------");
@@ -72,73 +69,50 @@ public class LoginController {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("index");
-		modelAndView.addObject(user);
+		// modelAndView.addObject(user);
 		return modelAndView;
 	}
 
-	@RequestMapping(value = {"/login/login"}, method = RequestMethod.POST)
+	/*
+	 * login with username and password
+	 */
+	@RequestMapping(value = {"/login/lup.grvemr"}, method = RequestMethod.POST)
 	public ClientMessageResponse login(final HttpServletRequest request) {
 
-		// RestTemplate restTemplate = new RestTemplate();
-		// User user = restTemplate.getForObject("http://localhost:8080/login",
-		// User.class);
 		ClientMessageResponse mresp = new ClientMessageResponse();
 		ObjectMapper mapper = new ObjectMapper();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyMMddhhmmss");
+		HashMap<String, String> map = new HashMap<>();
 		JsonNode jn = HttpUtil.getJSONFromPost(request);
-
-		System.out.println("-----------------------------------------");
-		System.out.println("This is LOGIN POST API");
-		System.out.println("-----------------------------------------");
-		System.out.println("timestamp : " + jn.get("timestamp").toString());
-		System.out.println("elements : " + jn.get("elements").toString());
-
-		// jn.get("state").toString().replaceAll("\"", "");
-
 		try {
 			ClientMessageRequest mr = new ClientMessageRequest(jn);
-
 			String username = mr.getElements().get("username").asText();
 			String password = mr.getElements().get("password").asText();
-
-			System.out.println("-----------------------------------------");
-			System.out.println("This is LOGIN POST API");
-			System.out.println("-----------------------------------------");
-			System.out.println("username : " + username);
-			System.out.println("password : " + password);
 
 			User user = userService.getUserByUsernamePassword(username, password);
 
 			if (user.isEmpty()) {
-				mresp.setState("enc");
-				mresp.setStatus("error");
-				mresp.setMessage("Wrong username or password");
-				mresp.setTimestamp(sdf.format(new Date()));
-				HashMap<String, String> error1 = new HashMap<String, String>();
-				error1.put("username", "i18n:wrongusername_txt");
-				error1.put("password", "i18n:wrongpassword_txt");
-				String base64 = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(error1));
-				ObjectNode obj = mapper.createObjectNode();
-				obj.put("error", base64);
-				mresp.setElements(obj);
+				map.put("error", "error-login");
+				mresp = new ClientMessageResponse(false, mr, map);
 			} else {
 				Session sess = new Session(user.getUuiduser());
-				mresp.setState("enc");
-				mresp.setStatus("success");
-				mresp.setMessage("this is  message");
-				mresp.setTimestamp(sdf.format(new Date()));
-				ObjectNode obj = mapper.createObjectNode();
-				String base64User = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(user));
-				obj.put("user", base64User);
-				String base64Session = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(sess));
-				obj.put("session", base64Session);
-				mresp.setElements(obj);
+				map.put("uuidsession", sess.getUuidsession().toString());
+				map.put("uuiduser", user.getUuiduser().toString());
+				mresp = new ClientMessageResponse(true, mr, map);
 			}
 		} catch (JsonParseException e1) {
+			ObjectNode ob = mapper.createObjectNode();
+			ob.put("error", "error-error");
+			mresp = new ClientMessageResponse("error", "clear", "lup", ob);
 			e1.printStackTrace();
 		} catch (ParseException e1) {
+			ObjectNode ob = mapper.createObjectNode();
+			ob.put("error", "error-error");
+			mresp = new ClientMessageResponse("error", "clear", "lup", ob);
 			e1.printStackTrace();
 		} catch (IOException e1) {
+			ObjectNode ob = mapper.createObjectNode();
+			ob.put("error", "error-error");
+			mresp = new ClientMessageResponse("error", "clear", "lup", ob);
 			e1.printStackTrace();
 		}
 		return mresp;

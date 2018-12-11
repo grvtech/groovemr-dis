@@ -102,9 +102,6 @@ public class UserService implements IUserService {
 			System.out.println("The user is NOT in memory db go fetch it from server");
 			System.out.println("-----------------------------------------");
 			/**/
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			headers.add("ApplicationID", appid);
 
 			HashMap<String, String> map = new HashMap<String, String>();
 
@@ -113,10 +110,9 @@ public class UserService implements IUserService {
 
 			MessageRequest mr;
 			try {
-				mr = new MessageRequest(new Date(), "action", map);
-				new HttpEntity<MessageRequest>(mr, headers);
-				ResponseEntity<User> response;
+				mr = new MessageRequest(uuidorganization, "action", map);
 
+				String url = "http://" + serverCore + "user/gubup";
 				response = restTemplate.postForEntity("http://" + serverCore + "user/gubup", mapper.writeValueAsString(mr), User.class);
 				user = response.getBody();
 

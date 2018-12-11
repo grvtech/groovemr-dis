@@ -1,5 +1,7 @@
 {
 	"button1":"Buton1 Francais",
 	"button2":"Buton2 Francais",
-	"index_username":"username fr"
+	"index_username":"username fr",
+	"error-username":"Nom d'usager erronée",
+	"error-password":"Mot de passe erronée"
 }

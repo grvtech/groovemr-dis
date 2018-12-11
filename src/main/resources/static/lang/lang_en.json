@@ -6,5 +6,7 @@ var lang_en = {
 	"index_password_required":"this password is required man!",
 	"index_login_btn":"Login GRV",
 	"index_subscribe":"Subscribe GRV",
-	"index_forgot":"Forgot password"
+	"index_forgot":"Forgot password",
+	"error-username":"Username is wrong",
+	"error-password":"Password is wrong"
 }

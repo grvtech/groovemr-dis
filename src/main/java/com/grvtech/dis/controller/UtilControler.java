@@ -3,7 +3,6 @@ package com.grvtech.dis.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,7 +33,7 @@ public class UtilControler {
 		try {
 			JsonNode jn = HttpUtil.getJSONFromPost(request);
 			cmreq = new ClientMessageRequest(jn);
-			Organization organization = orgservice.getOrganizationByUUID(UUID.fromString(cmreq.getElements().get("uuidorganization").asText()));
+			Organization organization = orgservice.getOrganization();
 			ObjectMapper mapper = new ObjectMapper();
 			ObjectNode objNode = mapper.createObjectNode();
 			cmr.setStatus("success");
