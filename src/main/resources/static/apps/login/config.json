@@ -3,6 +3,11 @@
 	"loginTarget": ".login",
 	"subscribeTarget": ".frontpage",
 	"forgotTarget": ".frontpage",
+	"actions":{
+		"login":"/login/lup.grvemr",
+		"subscribe":"/login/sub.grvemr",
+		"forgot":"/login/fup.grvemr"
+	},
 	"surveyLogin": {
 		"locale": "en",
 	    "pages": [

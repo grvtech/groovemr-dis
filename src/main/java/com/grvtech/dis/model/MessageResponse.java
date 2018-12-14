@@ -1,7 +1,24 @@
 package com.grvtech.dis.model;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.grvtech.dis.util.CryptoUtil;
 
 /*
 {
@@ -46,64 +63,70 @@ an event
 */
 
 public class MessageResponse {
-	private String uuisession;
-	private String uuidevent;
-	private String state; // clear|enc
+
+	private UUID uuidsession;
 	private String status; // success|error
-	private Date timestamp;
-	private ArrayList<Object> elements; // on error is empty
+	private String action;
+	private ObjectNode elements; // on error is empty
+
+	ApplicationContext context;
 
 	public MessageResponse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MessageResponse(String uuisession, String uuidevent, String state, String status, Date timestamp, ArrayList<Object> elements) {
+
+	public MessageResponse(boolean status, MessageRequest mr, HashMap<String, String> map) {
+		ObjectMapper mapper = new ObjectMapper();
+		if (status) {
+			this.status = "success";
+			this.uuidsession = mr.getUuidsession();
+			this.action = mr.getAction();
+			this.elements = mapper.createObjectNode();
+
+			System.out.println("--------------------------------------");
+			System.out.println("licence : " + context.getBean("licence").toString());
+			System.out.println("--------------------------------------");
+
+			Set<String> fields = map.keySet();
+			for (String field : fields) {
+				try {
+					this.elements.put(field, CryptoUtil.encrypt(context.getBean("licence").toString(), map.get(field)));
+				} catch (InvalidKeyException | BeansException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidAlgorithmParameterException
+						| UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					this.status = "error";
+					this.elements.put("error", "error message");
+				}
+			}
+		} else {
+			this.status = "error";
+			Set<String> fields = map.keySet();
+			for (String field : fields) {
+				this.elements.put(field, map.get(field));
+			}
+		}
+	}
+
+	public MessageResponse(String uuidsession, String action, String status, ObjectNode elements) {
 		super();
-		this.uuisession = uuisession;
-		this.uuidevent = uuidevent;
-		this.state = state;
+		this.uuidsession = UUID.fromString(uuidsession);
 		this.status = status;
-		this.timestamp = timestamp;
 		this.elements = elements;
 	}
 	/**
-	 * @return the uuisession
+	 * @return the uuidsession
 	 */
-	public String getUuisession() {
-		return uuisession;
+	public UUID getUuidsession() {
+		return uuidsession;
 	}
 	/**
 	 * @param uuisession
 	 *            the uuisession to set
 	 */
-	public void setUuisession(String uuisession) {
-		this.uuisession = uuisession;
-	}
-	/**
-	 * @return the uuidevent
-	 */
-	public String getUuidevent() {
-		return uuidevent;
-	}
-	/**
-	 * @param uuidevent
-	 *            the uuidevent to set
-	 */
-	public void setUuidevent(String uuidevent) {
-		this.uuidevent = uuidevent;
-	}
-	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return state;
-	}
-	/**
-	 * @param state
-	 *            the state to set
-	 */
-	public void setState(String state) {
-		this.state = state;
+	public void setUuidsession(UUID uuidsession) {
+		this.uuidsession = uuidsession;
 	}
 	/**
 	 * @return the status
@@ -119,30 +142,30 @@ public class MessageResponse {
 		this.status = status;
 	}
 	/**
-	 * @return the timestamp
-	 */
-	public Date getTimestamp() {
-		return timestamp;
-	}
-	/**
-	 * @param timestamp
-	 *            the timestamp to set
-	 */
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
-	/**
 	 * @return the elements
 	 */
-	public ArrayList<Object> getElements() {
+	public ObjectNode getElements() {
 		return elements;
 	}
 	/**
 	 * @param elements
 	 *            the elements to set
 	 */
-	public void setElements(ArrayList<Object> elements) {
+	public void setElements(ObjectNode elements) {
 		this.elements = elements;
+	}
+	/**
+	 * @return the action
+	 */
+	public String getAction() {
+		return action;
+	}
+	/**
+	 * @param action
+	 *            the action to set
+	 */
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 }

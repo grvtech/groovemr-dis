@@ -14,20 +14,26 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.grvtech.dis.configuration.DisConfig;
 import com.grvtech.dis.util.CryptoUtil;
 
+@Component
 public class MessageRequest {
 	private UUID uuidsession;
 	private UUID uuidorganization;
 	private String action; // for logging and tracing
 	private ObjectNode elements;
 
+	@Value("${emptysession}")
+	private String emptysession;
+
 	@Autowired
-	ApplicationContext context;
+	private DisConfig config;
 
 	public MessageRequest(String uuidorganization, String uuidsession, String action, HashMap<String, String> map) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException,
 			NoSuchPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
@@ -38,12 +44,18 @@ public class MessageRequest {
 		this.action = action;
 		this.elements = mapper.createObjectNode();
 		String cryptKey = "";
-		if (uuidsession.equals("0")) {
+
+		System.out.println("organization  : " + uuidorganization);
+		System.out.println("session : " + uuidsession);
+		System.out.println("Empty session : " + emptysession);
+
+		if (uuidsession.equals("00000000-0000-0000-0000-000000000000")) {
 			// this arrives only when we are making the firts requests
 			// we are crypting with the action name
 			cryptKey = this.action;
 		} else {
-			cryptKey = (String) context.getBean("license");
+			// cryptKey = (String) context.getBean("license");
+			cryptKey = config.getLicence();
 		}
 		if (!map.isEmpty()) {
 			Iterator<String> it = map.keySet().iterator();

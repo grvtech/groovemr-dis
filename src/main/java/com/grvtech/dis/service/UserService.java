@@ -44,8 +44,8 @@ public class UserService implements IUserService {
 	@Value("${core.server}")
 	private String serverCore;
 
-	@Value("${app.id}")
-	private String appid;
+	@Value("${uuidorganization}")
+	private String uuidorganization;
 
 	@Override
 	public List<User> getAllUsers() {
@@ -110,6 +110,7 @@ public class UserService implements IUserService {
 
 			MessageRequest mr;
 			try {
+
 				mr = new MessageRequest(uuidorganization, "action", map);
 
 				String url = "http://" + serverCore + "user/gubup";
@@ -119,7 +120,7 @@ public class UserService implements IUserService {
 				if (!user.isEmpty()) {
 					addUser(user);
 				}
-
+				/**/
 			} catch (InvalidKeyException e1) {
 				e1.printStackTrace();
 			} catch (NoSuchAlgorithmException e1) {

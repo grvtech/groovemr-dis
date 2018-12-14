@@ -11,26 +11,26 @@ function GRVlogin(object){
 		loginForm.locale = pageLanguage;
 		pageForms.push(loginForm);
 		$(this.loginWidget).Survey({model:loginForm,onServerValidateQuestions : function(survey,options){
-			var url = getPageObject();
+			//var url = getPageObject();
 			var mr = new GRVMessageRequest(survey.data,'login',0,0);
 			//call the ajax method
 		    $.ajax({
-		    			url: url.origin+"/login/login",
-		    			type: 'post',
-		                dataType: 'json',
-		                contentType: 'application/json',
-		                data: JSON.stringify(mr)
-		    		}).then(function (data) {
-				            var mresp = new GRVMessageResponse(data);
-				            if (mresp.status == "error"){
-				            	localiseObject(mresp);
-				            	options.errors = mresp.elements.error;
-				            }else{
-				            	
-				            }
-				            //tell survey that we are done with the server validation
-				            options.complete();
-				        });
+		    	url: pageObject.origin+object.actions.login,
+		    	type: 'post',
+		        dataType: 'json',
+		        contentType: 'application/json',
+		        data: JSON.stringify(mr)
+		    }).then(function (data) {
+				var mresp = new GRVMessageResponse(data);
+				if (mresp.status == "error"){
+					localiseObject(mresp);
+					options.errors = mresp.elements.error;
+				}else{
+					
+				}
+				//tell survey that we are done with the server validation
+				options.complete();
+			});
 		},onComplete:function(survey,options){
 			window.location = "/user";
 		}});

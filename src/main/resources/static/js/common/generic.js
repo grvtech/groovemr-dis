@@ -152,25 +152,3 @@ function initpage(){
 	});
 }
 
-
-function getLicence(orgid){
-	var data = {"uuidorganisation":orgid};
-	$.ajax({
-		url: url.origin+"/util/licence",
-		type: 'post',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify(data)
-	}).done(function(obj) {
-		//licence = obj.licence;
-		var mrep = new GRVMessageResponse(obj);
-		licence = 0;
-		if(mrep.elments.length > 0)
-		licence = mrep.elments.licence
-		
-	}).fail(function(xhr, textStatus, errorThrown){
-		concole.log("error retrieving data");
-		console.log(textStatus);
-		console.log(errorThrown);
-	});
-}

@@ -1,31 +1,42 @@
 package com.grvtech.dis.service.administration;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grvtech.dis.model.MessageRequest;
-import com.grvtech.dis.model.administration.Organization;
+import com.grvtech.dis.model.MessageResponse;
+import com.grvtech.dis.util.GRVRestClient;
 
+@Component
 public class OrganizationService implements IOrganizationService {
 
 	@Value("${core.server}")
 	private String serverCore;
 
-	@Value("${app.id}")
-	private String appid;
-
 	@Value("${uuidorganization}")
 	private String uuidorganization;
 
+	@Value("${emptysession}")
+	private String emptysession;
+
+	@Autowired
+	GRVRestClient grvrc;
+
 	@Override
-	public Organization getOrganization() {
+	public String getOrganizationLicence() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException,
+			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
 		/*
 		 * this function goes directly to core to fetch organisation info There
 		 * is no organisation info stored on the client app
@@ -33,26 +44,14 @@ public class OrganizationService implements IOrganizationService {
 		 * the flow : user - client - core - client - user
 		 * 
 		 */
-
-		Organization result = new Organization();
-		RestTemplate restTemplate = new RestTemplate();
-		ObjectMapper mapper = new ObjectMapper();
-
+		String result = "";
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("uuidorganization", uuidorganization.toString());
+		MessageRequest mreq = new MessageRequest(uuidorganization, emptysession, "gl", map);
+		String url = "http://" + serverCore + "/util/gl";
+		MessageResponse mres = grvrc.postRequest(url, mreq);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		headers.add("ApplicationID", appid);
-
-		MessageRequest mr = new MessageRequest("0", "action", map);
-		HttpEntity<MessageRequest> entity = new HttpEntity<MessageRequest>(mr, headers);
-		ResponseEntity<Organization> response = restTemplate.postForEntity("http://" + serverCore + "/util/gl", mapper.writeValueAsString(mr), Organization.class);
-		user = response.getBody();
-
-		if (!user.isEmpty()) {
-			addUser(user);
-		}
+		result = mres.getElements().get("licence").asText();
 		return result;
 	}
 

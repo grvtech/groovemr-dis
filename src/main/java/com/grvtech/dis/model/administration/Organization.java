@@ -3,10 +3,6 @@ package com.grvtech.dis.model.administration;
 import java.util.Date;
 import java.util.UUID;
 
-import org.springframework.web.client.RestTemplate;
-
-import com.grvtech.dis.model.User;
-
 public class Organization {
 	private int idorganization;
 	private String nameOrganization;
@@ -35,13 +31,6 @@ public class Organization {
 		if (this.idorganization != 0)
 			result = false;
 		return result;
-	}
-
-	public Organization(UUID organization) {
-		RestTemplate restTemplate = new RestTemplate();
-		this = restTemplate.postForEntity("http://" + serverCore + "user/gubup", mapper.writeValueAsString(mr), Organization.class);
-		user = response.getBody();
-
 	}
 
 	/**
