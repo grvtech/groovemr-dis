@@ -87,6 +87,7 @@ public final class XXTEA {
 	}
 	public static final byte[] decrypt(byte[] data, String key) {
 		try {
+			System.out.println("data :    " + data + "      key : " + key + "   utf8:" + key.getBytes("UTF-8"));
 			return decrypt(data, key.getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			return null;
@@ -111,8 +112,11 @@ public final class XXTEA {
 	public static final String decryptToString(byte[] data, String key) {
 		try {
 			byte[] bytes = decrypt(data, key);
-			if (bytes == null)
+			if (bytes == null) {
+				System.out.println("   bytes  is null");
 				return null;
+			}
+			System.out.println("   bytes " + bytes);
 			return new String(bytes, "UTF-8");
 		} catch (UnsupportedEncodingException ex) {
 			return null;
@@ -180,6 +184,8 @@ public final class XXTEA {
 			y = v[0] -= MX(sum, y, z, p, e, k);
 			sum = sum - DELTA;
 		}
+
+		System.out.println("  result decrypt " + v);
 		return v;
 	}
 
@@ -209,6 +215,8 @@ public final class XXTEA {
 		for (int i = 0; i < n; ++i) {
 			result[i >>> 2] |= (0x000000ff & data[i]) << ((i & 3) << 3);
 		}
+
+		System.out.println("  bytes in to int array " + result + "   ");
 		return result;
 	}
 
@@ -225,9 +233,11 @@ public final class XXTEA {
 		}
 		byte[] result = new byte[n];
 
+		System.out.println("  bytes in to byte array " + result + "   ");
 		for (int i = 0; i < n; ++i) {
 			result[i] = (byte) (data[i >>> 2] >>> ((i & 3) << 3));
 		}
+		System.out.println("  bytes in to byte array " + result + "   ");
 		return result;
 	}
 }

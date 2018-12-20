@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.grvtech.dis.configuration.DisConfig;
@@ -35,8 +36,8 @@ public class MessageRequest {
 	@Autowired
 	private DisConfig config;
 
-	public MessageRequest(String uuidorganization, String uuidsession, String action, HashMap<String, String> map) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException,
-			NoSuchPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+	public MessageRequest(String uuidorganization, String uuidsession, String action, HashMap<String, Object> map) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException,
+			NoSuchPaddingException, InvalidAlgorithmParameterException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, JsonProcessingException {
 		super();
 		ObjectMapper mapper = new ObjectMapper();
 		this.uuidsession = UUID.fromString(uuidsession);
@@ -61,7 +62,7 @@ public class MessageRequest {
 			Iterator<String> it = map.keySet().iterator();
 			while (it.hasNext()) {
 				String key = it.next();
-				String value = map.get(key);
+				String value = mapper.writeValueAsString(map.get(key));
 				String enc = CryptoUtil.encrypt(cryptKey, value);
 				System.out.println("Encrypted value:" + enc + "    key:" + key);
 				this.elements.put(key, enc);

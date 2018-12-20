@@ -2,6 +2,7 @@ package com.grvtech.dis.model;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -9,7 +10,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.grvtech.dis.util.xxtea.XXTEA;
 
 public class ClientMessageRequest {
 	private UUID uuidsession;
@@ -33,7 +33,15 @@ public class ClientMessageRequest {
 			Iterator<String> fieldNames = elems.fieldNames();
 			while (fieldNames.hasNext()) {
 				String fieldName = fieldNames.next();
-				this.elements.put(fieldName, XXTEA.decryptBase64StringToString(elems.get(fieldName).asText(), this.action));
+				// this.elements.put(fieldName,
+				// XXTEA.decryptBase64StringToString(elems.get(fieldName).asText(),
+				// this.action));
+				String scramble = elems.get(fieldName).asText();
+				// this.elements.put(fieldName,
+				// XXTEA.decryptToString(scramble.getBytes(), this.action));
+				this.elements.put(fieldName, Base64.getDecoder().decode(scramble.getBytes()));
+
+				System.out.println(fieldName + "   action : " + this.action + "   " + scramble + "  decrypt : " + Base64.getDecoder().decode(scramble.getBytes()));
 			}
 			// elems = new
 			// String(Base64.getDecoder().decode(jn.get("elements").toString().replaceAll("\"",

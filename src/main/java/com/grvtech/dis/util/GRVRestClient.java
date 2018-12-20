@@ -31,7 +31,7 @@ public class GRVRestClient {
 		headers.set("organization", uuidorganization);
 		headers.set("radu", "gabor");
 		headers.set("user-agent", "grv");
-		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+		HttpEntity<MessageRequest> entity = new HttpEntity<MessageRequest>(messageRequest, headers);
 
 		System.out.println("url : " + url);
 		RestTemplate restTemplate = new RestTemplate();

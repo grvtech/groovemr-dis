@@ -1,11 +1,18 @@
 package com.grvtech.dis.controller;
 
 import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.UUID;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -99,29 +105,21 @@ public class LoginController {
 				map.put("uuiduser", user.getUuiduser().toString());
 				mresp = new ClientMessageResponse(true, mr, map);
 			}
-		} catch (JsonParseException e1) {
-			ObjectNode ob = mapper.createObjectNode();
-			ob.put("error", "error-error");
-			mresp = new ClientMessageResponse("error", "clear", "lup", ob);
-			e1.printStackTrace();
-		} catch (ParseException e1) {
-			ObjectNode ob = mapper.createObjectNode();
-			ob.put("error", "error-error");
-			mresp = new ClientMessageResponse("error", "clear", "lup", ob);
-			e1.printStackTrace();
-		} catch (IOException e1) {
+		} catch (InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidAlgorithmParameterException | IllegalBlockSizeException
+				| BadPaddingException | IOException | ParseException e1) {
 			ObjectNode ob = mapper.createObjectNode();
 			ob.put("error", "error-error");
 			mresp = new ClientMessageResponse("error", "clear", "lup", ob);
 			e1.printStackTrace();
 		}
+
 		return mresp;
 	}
 
 	@RequestMapping(value = {"/login/subscribe"}, method = RequestMethod.POST)
 	public ClientMessageResponse subscribe(final HttpServletRequest request) {
 		ClientMessageResponse cmr = new ClientMessageResponse();
-		new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
 		new SimpleDateFormat("yyyMMddhhmmss");
 		JsonNode jn = HttpUtil.getJSONFromPost(request);
 		try {
@@ -134,7 +132,9 @@ public class LoginController {
 
 			User user = userService.getUserByEmailPassword(email, password);
 			if (user.isEmpty()) {
+
 				user = userService.getUserByUsernamePassword(username, password);
+
 				if (user.isEmpty()) {
 					// good create user
 					user = new User(0, UUID.randomUUID(), UUID.randomUUID(), username, password, email, "1234", "aaa", "aaa", "aaaa");
@@ -157,14 +157,14 @@ public class LoginController {
 			 * entered 2. verify email is not already entered
 			 */
 
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException
+				| NoSuchPaddingException | IOException | ParseException e) {
+			ObjectNode ob = mapper.createObjectNode();
+			ob.put("error", "error-error");
+			cmr = new ClientMessageResponse("error", "clear", "lup", ob);
+
 			e.printStackTrace();
 		}
-
 		return cmr;
 	}
 

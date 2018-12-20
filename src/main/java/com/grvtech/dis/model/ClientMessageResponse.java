@@ -1,5 +1,6 @@
 package com.grvtech.dis.model;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -131,7 +132,10 @@ public class ClientMessageResponse {
 			Iterator<String> fieldNames = elements.fieldNames();
 			while (fieldNames.hasNext()) {
 				String fieldName = fieldNames.next();
-				this.elements.put(fieldName, XXTEA.encryptToBase64String(elements.get(fieldName).asText(), this.action));
+				// this.elements.put(fieldName,
+				// XXTEA.encryptToBase64String(elements.get(fieldName).asText(),
+				// this.action));
+				this.elements.put(fieldName, Base64.getEncoder().encodeToString(elements.get(fieldName).asText().getBytes()));
 			}
 		} else {
 			Iterator<String> fieldNames = elements.fieldNames();
@@ -144,7 +148,7 @@ public class ClientMessageResponse {
 			Set<String> keys = messages.keySet();
 			for (String key : keys) {
 				if (this.state.equals("enc")) {
-					this.elements.put(key, XXTEA.encryptToBase64String(messages.get(key), this.action));
+					this.elements.put(key, Base64.getEncoder().encodeToString(elements.get(key).asText().getBytes()));
 				} else {
 					this.elements.put(key, messages.get(key));
 				}

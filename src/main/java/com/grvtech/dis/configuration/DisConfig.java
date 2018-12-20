@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.grvtech.dis.service.administration.IOrganizationService;
 
 @Configuration
@@ -28,8 +29,7 @@ public class DisConfig {
 		try {
 			licence = orgservice.getOrganizationLicence();
 		} catch (InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidAlgorithmParameterException | UnsupportedEncodingException
-				| IllegalBlockSizeException | BadPaddingException e) {
-			// TODO Auto-generated catch block
+				| IllegalBlockSizeException | BadPaddingException | JsonProcessingException e) {
 			e.printStackTrace();
 		}
 		return licence;

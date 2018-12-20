@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.grvtech.dis.model.MessageRequest;
 import com.grvtech.dis.model.MessageResponse;
 import com.grvtech.dis.util.GRVRestClient;
@@ -36,7 +37,7 @@ public class OrganizationService implements IOrganizationService {
 
 	@Override
 	public String getOrganizationLicence() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException,
-			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException {
+			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, JsonProcessingException {
 		/*
 		 * this function goes directly to core to fetch organisation info There
 		 * is no organisation info stored on the client app
@@ -45,7 +46,7 @@ public class OrganizationService implements IOrganizationService {
 		 * 
 		 */
 		String result = "";
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("uuidorganization", uuidorganization.toString());
 		MessageRequest mreq = new MessageRequest(uuidorganization, emptysession, "gl", map);
 		String url = "http://" + serverCore + "/util/gl";

@@ -10,7 +10,9 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface IOrganizationService {
 	public String getOrganizationLicence() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException,
-			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException;
+			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, JsonProcessingException;
 }

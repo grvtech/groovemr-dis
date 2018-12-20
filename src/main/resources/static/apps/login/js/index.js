@@ -12,7 +12,7 @@ function GRVlogin(object){
 		pageForms.push(loginForm);
 		$(this.loginWidget).Survey({model:loginForm,onServerValidateQuestions : function(survey,options){
 			//var url = getPageObject();
-			var mr = new GRVMessageRequest(survey.data,'login',0,0);
+			var mr = new GRVMessageRequest(survey.data,'login',emptysession,0);
 			//call the ajax method
 		    $.ajax({
 		    	url: pageObject.origin+object.actions.login,

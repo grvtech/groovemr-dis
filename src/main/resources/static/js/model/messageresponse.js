@@ -4,14 +4,14 @@ class GRVMessageResponse{
 		if(object.state == 'clear'){
 			if(result.elements && typeof(result.elements) == "object"){
 				$.each(result.elements, function(index, value){
-					result.elements[index] = JSON.parse(atob(value));
+					result.elements[index] = value;
 				});
 			}
 		}else{
 			if(result.elements && typeof(result.elements) == "object"){
 				$.each(result.elements, function(index, value){
-					//result.elements[index] = JSON.parse(atob(value));
-					result.elements[index] = JSON.parse(Tea.decrypt(value,licence));
+					console.log(index +"      "+value+"    "+atob(value));
+					result.elements[index] = JSON.parse(atob(value));
 				});
 			}
 		}
