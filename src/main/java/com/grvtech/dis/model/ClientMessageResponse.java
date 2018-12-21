@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -116,7 +117,7 @@ public class ClientMessageResponse {
 		}
 	}
 
-	public ClientMessageResponse(boolean status, ClientMessageRequest request, HashMap<String, String> messages) {
+	public ClientMessageResponse(boolean status, ClientMessageRequest request, HashMap<String, Object> messages) throws JsonProcessingException {
 		super();
 		ObjectMapper mapper = new ObjectMapper();
 		if (status) {
@@ -148,9 +149,10 @@ public class ClientMessageResponse {
 			Set<String> keys = messages.keySet();
 			for (String key : keys) {
 				if (this.state.equals("enc")) {
-					this.elements.put(key, Base64.getEncoder().encodeToString(elements.get(key).asText().getBytes()));
+					String scramble = Base64.getEncoder().encodeToString(mapper.writeValueAsBytes(messages.get(key)));
+					this.elements.put(key, scramble);
 				} else {
-					this.elements.put(key, messages.get(key));
+					this.elements.put(key, messages.get(key).toString());
 				}
 			}
 		}

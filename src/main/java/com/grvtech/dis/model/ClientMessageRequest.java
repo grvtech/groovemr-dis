@@ -39,16 +39,11 @@ public class ClientMessageRequest {
 				String scramble = elems.get(fieldName).asText();
 				// this.elements.put(fieldName,
 				// XXTEA.decryptToString(scramble.getBytes(), this.action));
-				this.elements.put(fieldName, Base64.getDecoder().decode(scramble.getBytes()));
+				this.elements.put(fieldName, new String(Base64.getDecoder().decode(scramble.getBytes())));
 
-				System.out.println(fieldName + "   action : " + this.action + "   " + scramble + "  decrypt : " + Base64.getDecoder().decode(scramble.getBytes()));
+				System.out.println(fieldName + "   action : " + this.action + "   " + scramble + "  decrypt : " + new String(Base64.getDecoder().decode(scramble.getBytes())));
 			}
-			// elems = new
-			// String(Base64.getDecoder().decode(jn.get("elements").toString().replaceAll("\"",
-			// "")));
 		} else {
-			// elems = jn.get("elements").toString().replaceAll("\\\\",
-			// "").replaceAll("^\"(.*)\"$", "$1");
 			Iterator<String> fieldNames = elems.fieldNames();
 			while (fieldNames.hasNext()) {
 				String fieldName = fieldNames.next();

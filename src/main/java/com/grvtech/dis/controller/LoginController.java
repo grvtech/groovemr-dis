@@ -87,7 +87,7 @@ public class LoginController {
 
 		ClientMessageResponse mresp = new ClientMessageResponse();
 		ObjectMapper mapper = new ObjectMapper();
-		HashMap<String, String> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		JsonNode jn = HttpUtil.getJSONFromPost(request);
 		try {
 			ClientMessageRequest mr = new ClientMessageRequest(jn);
@@ -97,7 +97,10 @@ public class LoginController {
 			User user = userService.getUserByUsernamePassword(username, password);
 
 			if (user.isEmpty()) {
-				map.put("error", "error-login");
+				HashMap<String, String> errors = new HashMap<String, String>();
+				errors.put("username", "i18n:wrongusername_txt");
+				errors.put("password", "i18n:wrongpassword_txt");
+				map.put("error", errors);
 				mresp = new ClientMessageResponse(false, mr, map);
 			} else {
 				Session sess = new Session(user.getUuiduser());

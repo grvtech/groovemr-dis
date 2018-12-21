@@ -1,6 +1,3 @@
-
-
-
 var loginConfig={
 	container:'.login',
 	loginTarget:'.login',

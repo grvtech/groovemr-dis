@@ -1,11 +1,13 @@
 package com.grvtech.dis.model;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,6 +16,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,6 +72,7 @@ public class MessageResponse {
 	private String action;
 	private ObjectNode elements; // on error is empty
 
+	@Autowired
 	ApplicationContext context;
 
 	public MessageResponse() {
@@ -91,9 +95,9 @@ public class MessageResponse {
 			Set<String> fields = map.keySet();
 			for (String field : fields) {
 				try {
-					this.elements.put(field, CryptoUtil.encrypt(context.getBean("licence").toString(), map.get(field)));
+					this.elements.put(field, CryptoUtil.decrypt(context.getBean("licence").toString(), map.get(field)));
 				} catch (InvalidKeyException | BeansException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidAlgorithmParameterException
-						| UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
+						| IllegalBlockSizeException | BadPaddingException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					this.status = "error";
@@ -106,6 +110,17 @@ public class MessageResponse {
 			for (String field : fields) {
 				this.elements.put(field, map.get(field));
 			}
+		}
+	}
+
+	public void clear() throws InvalidKeyException, BeansException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException,
+			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, IOException {
+		Iterator<String> fieldNames = this.elements.fieldNames();
+		while (fieldNames.hasNext()) {
+			String fieldName = fieldNames.next();
+			String fieldValueScramble = this.elements.get(fieldName).asText();
+			String fieldValue = CryptoUtil.decrypt(context.getBean("licence").toString(), fieldValueScramble);
+			this.elements.put(fieldName, fieldValue);
 		}
 	}
 

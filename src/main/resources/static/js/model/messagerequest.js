@@ -7,7 +7,7 @@ class GRVMessageRequest{
 		Object.keys(objectArray).forEach(function(key) {
 			var k = key;
 			var v = objectArray[key];
-			//console.log(key, objectArray[key]);
+			console.log(key, objectArray[key]);
 			objectArray[key] = btoa(v);
 			console.log(key, objectArray[key]);
 		});

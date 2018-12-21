@@ -1,4 +1,4 @@
-function deployLanguage(){
+function deployLanguage(object){
 	var deployText = function(){
 		console.log('deploy text');
 		var t = $(this).text();
@@ -33,9 +33,16 @@ function deployLanguage(){
 	};
 	
 	if(languageObject){
-		$("[i18n]").each(deployAttribute);
-		$(":contains('i18n:'):not(:has(:contains('i18n:')))").each(deployText);
-		$("[value^='i18n:']").each(deployValue);
+		if(object  && typeof(object) == "element"){
+			$(object).find("[i18n]").each(deployAttribute);
+			$(object).find(":contains('i18n:'):not(:has(:contains('i18n:')))").each(deployText);
+			$(object).find("[value^='i18n:']").each(deployValue);
+		}else{
+			$("[i18n]").each(deployAttribute);
+			$(":contains('i18n:'):not(:has(:contains('i18n:')))").each(deployText);
+			$("[value^='i18n:']").each(deployValue);
+		}
+		
 	}
 	
 }
@@ -134,7 +141,6 @@ function fetchConfig(configName,callback){
 		if (callback && typeof(callback) === "function") {
 			callback(object);
 	    }
-		console.log( "success load config file" );
 	}).fail(function(xhr, textStatus, errorThrown) {
 	    console.log( "error loading config object "+configName );
 	    console.log(errorThrown);
@@ -150,5 +156,6 @@ function initpage(){
 		var objName = $(obj).attr('id').substring(4);
 		fetchConfig(objName,eval('GRV'+objName));
 	});
+	//deployLanguage();
 }
 

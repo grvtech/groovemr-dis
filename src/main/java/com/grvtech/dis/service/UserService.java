@@ -23,6 +23,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grvtech.dis.model.MessageRequest;
 import com.grvtech.dis.model.MessageResponse;
@@ -102,6 +103,7 @@ public class UserService implements IUserService {
 			// not in memory - go get it
 			System.out.println("-----------------------------------------");
 			System.out.println("The user is NOT in memory db go fetch it from server");
+			System.out.println("The user " + username + "    the password : " + password);
 			System.out.println("-----------------------------------------");
 			/**/
 
@@ -116,11 +118,11 @@ public class UserService implements IUserService {
 
 			String url = "http://" + serverCore + "/user/gubup";
 			MessageResponse mres = grvrc.postRequest(url, mr);
-
+			mres = grvrc.clear(mres);
 			if (mres.getStatus().equals("success")) {
 				System.out.println("user object" + mapper.writeValueAsString(mres));
-
-				user = mapper.readValue(mres.getElements().get("user").asText(), User.class);
+				mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+				user = mapper.readValue(mres.getElements().get("user").toString(), User.class);
 			}
 			if (!user.isEmpty()) {
 				addUser(user);

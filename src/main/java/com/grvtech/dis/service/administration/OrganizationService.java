@@ -1,6 +1,6 @@
 package com.grvtech.dis.service.administration;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -11,11 +11,11 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.grvtech.dis.model.MessageRequest;
 import com.grvtech.dis.model.MessageResponse;
 import com.grvtech.dis.util.GRVRestClient;
@@ -37,7 +37,7 @@ public class OrganizationService implements IOrganizationService {
 
 	@Override
 	public String getOrganizationLicence() throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException,
-			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, JsonProcessingException {
+			IllegalBlockSizeException, BadPaddingException, BeansException, IOException {
 		/*
 		 * this function goes directly to core to fetch organisation info There
 		 * is no organisation info stored on the client app
@@ -51,7 +51,7 @@ public class OrganizationService implements IOrganizationService {
 		MessageRequest mreq = new MessageRequest(uuidorganization, emptysession, "gl", map);
 		String url = "http://" + serverCore + "/util/gl";
 		MessageResponse mres = grvrc.postRequest(url, mreq);
-
+		mres = grvrc.clear(mres);
 		result = mres.getElements().get("licence").asText();
 		return result;
 	}
