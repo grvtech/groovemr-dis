@@ -23,7 +23,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grvtech.dis.model.MessageRequest;
 import com.grvtech.dis.model.MessageResponse;
@@ -121,8 +120,9 @@ public class UserService implements IUserService {
 			mres = grvrc.clear(mres);
 			if (mres.getStatus().equals("success")) {
 				System.out.println("user object" + mapper.writeValueAsString(mres));
-				mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-				user = mapper.readValue(mres.getElements().get("user").toString(), User.class);
+				// mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+				System.out.println(" ---- " + mres.getElements().get("user").asText());
+				user = mapper.readValue(mres.getElements().get("user").asText(), User.class);
 			}
 			if (!user.isEmpty()) {
 				addUser(user);

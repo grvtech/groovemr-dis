@@ -8,7 +8,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.UUID;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -140,7 +139,8 @@ public class LoginController {
 
 				if (user.isEmpty()) {
 					// good create user
-					user = new User(0, UUID.randomUUID(), UUID.randomUUID(), username, password, email, "1234", "aaa", "aaa", "aaaa");
+					// user = new User(0, UUID.randomUUID(), UUID.randomUUID(),
+					// username, password, email, "1234", "aaa", "aaa", "aaaa");
 					if (userService.addUser(user)) {
 						userService.process();
 						userService.addUserToCore(user);

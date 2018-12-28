@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.grvtech.dis.util.xxtea.XXTEA;
 
 public class ClientMessageResponse {
 	private String status; // success | error
@@ -81,7 +80,7 @@ public class ClientMessageResponse {
 			Iterator<String> fieldNames = elements.fieldNames();
 			while (fieldNames.hasNext()) {
 				String fieldName = fieldNames.next();
-				this.elements.put(fieldName, XXTEA.encryptToBase64String(elements.get(fieldName).asText(), this.action));
+				this.elements.put(fieldName, Base64.getEncoder().encodeToString(elements.get(fieldName).asText().getBytes()));
 			}
 		} else {
 			Iterator<String> fieldNames = elements.fieldNames();
@@ -106,7 +105,7 @@ public class ClientMessageResponse {
 			Iterator<String> fieldNames = elements.fieldNames();
 			while (fieldNames.hasNext()) {
 				String fieldName = fieldNames.next();
-				this.elements.put(fieldName, XXTEA.encryptToBase64String(elements.get(fieldName).asText(), this.action));
+				this.elements.put(fieldName, Base64.getEncoder().encodeToString(elements.get(fieldName).asText().getBytes()));
 			}
 		} else {
 			Iterator<String> fieldNames = elements.fieldNames();

@@ -12,7 +12,7 @@ class GRVMessageResponse{
 				console.log(result.elements);
 				$.each(result.elements, function(index, value){
 					console.log(index +"      "+value+"    "+atob(value));
-					result.elements[index] = JSON.parse(atob(value));
+					result.elements[index] = atob(value);
 				});
 			}
 		}

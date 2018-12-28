@@ -27,12 +27,23 @@ function GRVlogin(object){
 					options.errors = mresp.elements.error;
 				}else{
 					//tell survey that we are done with the server validation
-					
+					if (storageAvailable('sessionStorage')) {
+						  // Yippee! We can use sessionStorage awesomeness
+						var login = {};
+						login['timestamp'] = moment().format('YYYY-MM-DD HH:mm:ss');
+						login['user'] = mresp.elements.uuiduser;
+						login['session'] = mresp.elements.uuidsession;
+						sessionStorage.setItem('loginObject',login);
+					}
+					else {
+					  // Too bad, no localStorage for us
+						console.log("no local storage")
+					}
 				}
 				options.complete();
 			});
 		},onComplete:function(survey,options){
-			window.location = "/user";
+			//window.location = "/user";
 		}});
 			
 		this.subscribeWidget = $('<div>',{class:'grv-widget grv-subscribe',id:'subscribeWidget'}).appendTo(this.loginContainer);
