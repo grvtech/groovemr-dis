@@ -1,0 +1,66 @@
+util
+	service 
+		get licence  /util/gl
+
+login app = login controler
+/login/lup = login username password
+	service
+		get user by username password /user/gubup
+			verify user local
+				if yes 
+					verify user to core
+						if yes success
+						if no error
+				if no
+					verify user to core
+						if yes 
+							add user local
+							success
+						if no error
+						
+	if success go user page
+	if error display error messages
+	
+/login/lep = login email password
+	service
+		get user by email password	/user/gubep
+	if success go user page
+	if error display error messages
+	
+/login/sub = subscribe
+	service
+		send user object			/user/sub
+		
+		validate user local
+			if no validate user core
+				if no success
+				if yes error
+			if yes error
+	if success go user page
+	if error display error messages
+
+
+frontpage app
+
+/frontpage/gfps  = get front pages
+/frontpage/afp	= add front page
+/frontpage/dfp	= delete front page
+/frontpage/efp	= edit front page
+/frontpage/disfp = disable front page
+/frontpage/enfp = enable front page
+
+
+patientsearch app
+/patientsearch/sp
+
+
+messenger
+/messenger/vm = view messages
+/messenger/sm = send messages
+/messenger/dm = delete messages
+
+
+notification app
+/notification/gn = get notofications
+/notification/sn = send notification
+/notification/an = aknoledge notification

@@ -1,0 +1,36 @@
+/*comon*/
+.wrap{position:absolute;left:0px;top:0px;height:100%;width:100%;margin:0;min-width:1024px;min-height:700px;background-color:#ffffff;}
+.grv-header{flex:1;max-height:40px;display:flex;flex-direction:row;}
+.grv-main{flex:1;display:flex;flex-direction:row;}
+
+
+
+/* index 3 columns grid*/
+.index-page{display:flex;flex-direction:column;}
+.coloana{flex:1;}
+.col1{width:40%;height:100%;display:flex;flex-wrap:nowrap;flex-direction: column;justify-content:center;align-items:center;}
+.col2{width:40%;height:100%;display:flex;flex-wrap:nowrap;flex-direction: column;justify-content:center;align-items:center;}
+.col3{width:20%;height:100%;}
+
+
+
+/* user page grid*/
+.user-page{display:flex;flex-direction:column;}
+
+.grv-header > div {flex:1;}
+
+.grv-header .grv-linesbtn{max-width:30px;min-width:30px;font-size:1.25rem;line-height:40px;height:100%;display:flex;flex-direction:row;align-items:center;justify-content:center;}
+.grv-header .grv-logo{max-width:100px;min-width:100px;background-color:cyan;height:100%;padding:10px;font-size:1.1rem;}
+.grv-header .grv-search{height:100%;}
+.grv-header .grv-settings{max-width:30px;min-width:30px;font-size:1.35rem;height:100%;display:flex;flex-direction:row;align-items:center;justify-content:center;}
+.grv-header .grv-pils{max-width:80px;min-width:80px;height:100%;}
+.grv-header .grv-topmenu{background-color:red;height:100%;max-width:300px;min-width:300px;}
+.grv-header .grv-language{background-color:transparent;height:100%;max-width:50px;}
+.grv-header .grv-pils .pilbar {height:100%;display:flex;flex-direction:row;}
+
+.grv-header .grv-pils .pil {flex:1;height:100%;font-size:1.3rem;position: relative;display:flex;flex-direction:row;align-items:center;justify-content:center;}
+.grv-header .grv-pils .pil:hover {background-color:#cdcdcd;}
+.grv-header .grv-pils .button__badge {background-color: #fa3e3e;border-radius: 4px;color: white;padding: 1px 3px;font-size: 10px;  position: absolute;top: 2px;right: 2px;}
+
+
+.grv-search{background-color:#fafafa;border-bottom:1px solid #cdcdcd;}

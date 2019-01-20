@@ -1,0 +1,75 @@
+{
+	"container": ".login",
+	"loginTarget": ".login",
+	"subscribeTarget": ".frontpage",
+	"forgotTarget": ".frontpage",
+	"actions":{
+		"login":"/login/lup.grvemr",
+		"subscribe":"/login/sub.grvemr",
+		"forgot":"/login/fup.grvemr"
+	},
+	"surveyLogin": {
+		"locale": "en",
+	    "pages": [
+	        {
+	            "name": "groovemr-dis-login", "elements": [
+	            	{
+	            		"type": "panel",
+                    	"innerIndent": 0,
+                    	"name": "panel1",
+                    	"elements": [	
+                    		{ "type": "text", "name": "username", "title":{"en":"Username","fr":"Usager"} , "isRequired":true,"requiredErrorText":{"en":"Required field","fr":"Champ requis"},"validators" : [{"type" : "text","minLength": 2, "text":{"en":"Username length is wrong","fr":"Longuer usager erroné"}}]},
+	                		{ "type": "text","inputType":"password","name": "password","title": {"en":"Password","fr":"Mot de passe"},"isRequired":true,"requiredErrorText":{"en":"Required field","fr" :"Champ requis"}}	
+                    	]
+	            	}
+	            ]
+	        }
+	    ],
+	    "completeText":{"en":"Login","fr":"Login"}
+	},
+	"surveySubscribe":{
+	    "pages": [
+	        {
+	            "name": "groovemr-dis-subscribe", 
+	            "title": {"en":"Subscribe","fr":"Suscription"},
+	            "elements": [
+	            	{
+	            		"type":"panel",
+	            		"name":"panel1",
+	            		"description":{"en":"Please subscribe to ....", "fr":"Remplir le formulaire pour vous inscrire"},
+	            		"elements":[
+		            		{ "type": "text", "name": "fname", "placeHolder":{"en":"First Name","fr":"Prenom"}, "title": " ","isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"}},
+			                { "type": "text", "startWithNewLine": "false","name": "lname", "placeHolder":{"en":"Last Name","fr":"Nom"},"title": " ","isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"}}, 
+			                { "type": "text", "name": "email", "placeHolder": {"en":"Email","fr":"Courriel"}, "title": " ","isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"},"validators" : [{"type": "email","text": {"en":"Email format is wrong","fr":"Format courriel erroné"}}]},
+			                { "type": "text", "name": "username", "placeHolder": {"en":"Username","fr":"Usager"}, "title":" ","isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"}},
+			                { "type": "text", "inputType":"password", "name": "password", "placeHolder": {"en":"Password","fr":"Mot de passe"}, "title": " ","isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"}},
+			                { "type": "text", "startWithNewLine": "false", "inputType":"password", "name": "cpassword", "placeHolder": {"en":"Confirm password","fr":"Confirmation mot de passe"}, "title": " ", "isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"},"validators" : [{"type": "expression","expression":"{password} = {cpassword}","text": {"en":"Wrong password confirmation","fr":"Confirmation erroné"}}]}
+	            		]
+	            	}
+	                
+	            ]
+	        }
+	    ],
+	    "completeText": {"en":"Send Subscription","fr":"Envoie demande de suscription"}
+	},
+	"surveyForgot":{
+	    "pages": [
+	        {
+	            "name": "groovemr-dis-forgot",
+	            "title": {"en":"Forgot password","fr":"Mot de passe oublié"},
+	            "elements": [
+	                   	{
+		            		"type":"panel",
+		            		"name":"panel1",
+		            		"description":{"en":"Please fill the form to reset you password", "fr":"Remplir le formulaire pour vous reinitialiser votre mot de passe"},
+		            		"elements":[
+				                { "type": "text", "name": "username", "placeHolder":{"en":"Username","fr":"Usager"},"titleLocation": "hidden","isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"}},
+				                { "type": "text", "name": "email", "placeHolder": {"en":"Email","fr":"Courriel"}, "titleLocation": "hidden","isRequired":true, "requiredErrorText":{"en":"Required field","fr":"Champ requis"},"validators" : [{"type": "email","text": {"en":"Email format is wrong","fr":"Format courriel erroné"}}]}
+		            		]
+	            		}
+	            ]
+	        }
+	    ],
+	    "completeText": {"en":"Send password reset","fr":"Initialisé mot de passe"}
+	}
+}

@@ -1,6 +1,6 @@
 package com.grvtech.dis.service;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -13,28 +13,42 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grvtech.dis.model.MessageRequest;
+import com.grvtech.dis.model.MessageResponse;
 import com.grvtech.dis.model.User;
 import com.grvtech.dis.repository.UserRepository;
-import com.grvtech.dis.util.CryptoUtil;
+import com.grvtech.dis.util.GRVRestClient;
 
 @Service
 public class UserService implements IUserService {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
 	@Autowired
 	UserRepository repository;
+
+	@Value("${core.server}")
+	private String serverCore;
+
+	@Value("${uuidorganization}")
+	private String uuidorganization;
+
+	@Value("${emptysession}")
+	private String emptysession;
+
+	@Autowired
+	private GRVRestClient grvrc;
 
 	@Override
 	public List<User> getAllUsers() {
@@ -67,59 +81,51 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User getUserByUsernamePassword(String username, String password) {
+	@Async("processExecutor")
+	public void process() {
+		logger.info("Received request to process in ProcessServiceImpl.process()");
+		try {
+			Thread.sleep(15 * 1000);
+			logger.info("Processing complete");
+		} catch (InterruptedException ie) {
+			logger.error("Error in ProcessServiceImpl.process(): {}", ie.getMessage());
+		}
+	}
+
+	@Override
+	public User getUserByUsernamePassword(String username, String password) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException,
+			InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, IOException {
 		User user = repository.findByUP(username, password);
-		RestTemplate restTemplate = new RestTemplate();
-		ObjectMapper mapper = new ObjectMapper();
+
 		if (user.isEmpty()) {
+			ObjectMapper mapper = new ObjectMapper();
 			// not in memory - go get it
 			System.out.println("-----------------------------------------");
 			System.out.println("The user is NOT in memory db go fetch it from server");
+			System.out.println("The user " + username + "    the password : " + password);
 			System.out.println("-----------------------------------------");
 			/**/
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			try {
-				map.add("username", CryptoUtil.encrypt("test", username));
-				map.add("password", CryptoUtil.encrypt("test", password));
-			} catch (InvalidKeyException e1) {
-				e1.printStackTrace();
-			} catch (NoSuchAlgorithmException e1) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
 
-				e1.printStackTrace();
-			} catch (InvalidKeySpecException e1) {
+			map.put("username", username);
+			map.put("password", password);
 
-				e1.printStackTrace();
-			} catch (NoSuchPaddingException e1) {
+			MessageRequest mr;
 
-				e1.printStackTrace();
-			} catch (InvalidAlgorithmParameterException e1) {
+			mr = new MessageRequest(uuidorganization, emptysession, "gubup", map);
 
-				e1.printStackTrace();
-			} catch (UnsupportedEncodingException e1) {
-
-				e1.printStackTrace();
-			} catch (IllegalBlockSizeException e1) {
-				e1.printStackTrace();
-			} catch (BadPaddingException e1) {
-				e1.printStackTrace();
+			String url = "http://" + serverCore + "/user/gubup";
+			MessageResponse mres = grvrc.postRequest(url, mr);
+			mres = grvrc.clear(mres);
+			if (mres.getStatus().equals("success")) {
+				System.out.println("user object" + mapper.writeValueAsString(mres));
+				// mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+				System.out.println(" ---- " + mres.getElements().get("user").asText());
+				user = mapper.readValue(mres.getElements().get("user").asText(), User.class);
 			}
-
-			new HttpEntity<MultiValueMap<String, Object>>(map, headers);
-			ResponseEntity<User> response;
-			try {
-				response = restTemplate.postForEntity("http://localhost:8080/user/gu", mapper.writeValueAsString(map), User.class);
-				user = response.getBody();
-			} catch (RestClientException e) {
-				e.printStackTrace();
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-
-			if (user.isEmpty()) {
-				user = new User();
+			if (!user.isEmpty()) {
+				addUser(user);
 			}
 		}
 		return user;
@@ -139,8 +145,33 @@ public class UserService implements IUserService {
 
 	@Override
 	public boolean addUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println("------------------------------------");
+		int r = repository.insert(user);
+		System.out.println("------------------------------------");
+		// process();
+		// addUserToCore(user);
+		return (r == 1) ? true : false;
+	}
+
+	@Override
+	@Async("processExecutor")
+	public void addUserToCore(User user) {
+		new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		new ObjectMapper();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("username", user.getUsername());
+		map.put("email", user.getEmail());
+		map.put("password", user.getPassword());
+		map.put("uuiduser", user.getUuiduser().toString());
+		map.put("uuidperson", user.getUuidperson().toString());
+		map.put("pin", user.getPin());
+		map.put("logo", user.getLogo());
+		map.put("securityimage", user.getSecurityimage());
+		map.put("authmethod", user.getAuthmethod());
+
 	}
 
 	@Override
@@ -153,6 +184,12 @@ public class UserService implements IUserService {
 	public void deleteUser(int iduser) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public User getUserByEmailPassword(String email, String password) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

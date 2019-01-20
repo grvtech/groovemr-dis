@@ -1,38 +1,62 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 
-<head th:fragment="common-header-css">
-    <link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
+<head th:fragment="common-header">
     <link rel="stylesheet" href="webjars/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="webjars/jquery-ui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="webjars/font-awesome/5.2.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/model/grid.css}" href="../../css/model/grid.css" />
+    <link rel="stylesheet" th:href="@{/css/common/main.css}" href="../../css/common/main.css" />
+    <link rel="stylesheet" th:href="@{/css/model/language.css}" href="../../css/model/language.css" />
     <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="webjars/jquery-ui/1.12.1/jquery-ui.min.js"></script>
     <script src="webjars/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="webjars/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="webjars/momentjs/2.22.2/min/moment.min.js"></script>
     <script th:href="@{/lang/lang.js}" src="../../lang/lang.js"></script>
     <script th:href="@{/js/common/survey.jquery.min.js}" src="../../js/common/survey.jquery.min.js"></script>
+    <script th:href="@{/js/model/grid.js}" src="../../js/model/grid.js"></script>
+    <script th:href="@{/js/model/language.js}" src="../../js/model/language.js"></script>
     <script th:href="@{/js/model/messagerequest.js}" src="../../js/model/messagerequest.js"></script>
+    <script th:href="@{/js/model/messageresponse.js}" src="../../js/model/messageresponse.js"></script>
+    <script th:href="@{/js/model/xxtea.js}" src="../../js/model/xxtea.js"></script>
     <script th:href="@{/js/common/generic.js}" src="../../js/common/generic.js"></script>
     <script th:href="@{/js/common/define.js}" src="../../js/common/define.js"></script>
-    
-    
+    <!-- info module -->
+    <link rel="stylesheet" th:href="@{/apps/info/css/index.css}" href="../../apps/info/css/index.css" />
+    <script th:href="@{/apps/info/js/index.js}" src="../../apps/info/js/index.js"></script>
 </head>
 
 
-<head th:fragment="index-header-css">
-
-    <link rel="stylesheet" th:href="@{/css/login.css}" href="../../css/login.css" />
-    <link rel="stylesheet" th:href="@{/css/frontpage.css}" href="../../css/frontpage.css" />
-    <link rel="stylesheet" th:href="@{/css/language.css}" href="../../css/language.css" />
-    <link rel="stylesheet" th:href="@{/css/index.css}" href="../../css/index.css" />
-    <script th:href="@{/js/model/login.js}" src="../../js/model/login.js"></script>
-    <script th:href="@{/js/model/frontpage.js}" src="../../js/model/frontpage.js"></script>
-    <script th:href="@{/js/model/language.js}" src="../../js/model/language.js"></script>
-
+<head th:fragment="index-header">
+    <link rel="stylesheet" th:href="@{/css/pages/index.css}" href="../../css/pages/index.css" />
+    <!-- login module -->
+    <link rel="stylesheet" th:href="@{/apps/login/css/index.css}" href="../../apps/login/css/index.css" />
+    <script th:href="@{/apps/login/js/index.js}" src="../../apps/login/js/index.js"></script>
+    <!-- frontpage module -->
+    <link rel="stylesheet" th:href="@{/apps/frontpage/css/index.css}" href="../../apps/frontpage/css/index.css" />
+    <script th:href="@{/apps/frontpage/js/index.js}" src="../../apps/frontpage/js/index.js"></script>
 </head>
+
+
+<head th:fragment="user-header">
+    <link rel="stylesheet" th:href="@{/css/pages/user.css}" href="../../css/pages/user.css" />
+    <!-- search app -->
+    <link rel="stylesheet" th:href="@{/apps/patientsearch/css/index.css}" href="../../apps/patientsearch/css/index.css" />
+    <script th:href="@{/apps/patientsearch/js/index.js}" src="../../apps/patientsearch/js/index.js"></script>
+    <!-- messenger app -->
+    <link rel="stylesheet" th:href="@{/apps/messenger/css/index.css}" href="../../apps/messenger/css/index.css" />
+    <script th:href="@{/apps/messenger/js/index.js}" src="../../apps/messenger/js/index.js"></script>
+    <!-- userstats app -->
+    <link rel="stylesheet" th:href="@{/apps/userstats/css/index.css}" href="../../apps/userstats/css/index.css" />
+    <script th:href="@{/apps/userstats/js/index.js}" src="../../apps/userstats/js/index.js"></script>
+</head>
+
 
 
 <head th:fragment="header-css">
-    <link rel="stylesheet" th:href="@{/css/login.css}" href="../../css/main.css" />
-    <link rel="stylesheet" th:href="@{/css/frontpage.css}" href="../../css/main.css" />
+    <link rel="stylesheet" th:href="@{/css/model/login.css}" href="../../css/model/login.css" />
+    <link rel="stylesheet" th:href="@{/css/model/frontpage.css}" href="../../css/model/frontpage.css" />
     
     
     <script src="webjars/jqplot/1.0.8r1250/jquery.jqplot.min.js"></script>

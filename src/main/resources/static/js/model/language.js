@@ -32,14 +32,14 @@ class GRVLanguage{
 	}
 }
 */
-function GRVLanguage(configObject){
+function GRVlanguage(configObject){
 		this.config = configObject;
 		this.container = $(configObject.container);
 		this.dropdown = $('<div>',{class:'dropdown'}).appendTo(this.container);
 		this.label = 'i18n:language_btn';
 		this.labeltag = 'language_btn_'+pageLanguage;
-		this.button = $('<button>',{type:'button',class:'btn btn-secondary rounded-circle','data-toggle':'dropdown'}).text(this.label).appendTo(this.dropdown);
-		this.menu = $('<div>',{class:'dropdown-menu'}).appendTo(this.dropdown);
+		this.button = $('<button>',{type:'button',class:'btn btn-link','data-toggle':'dropdown'}).text(this.label).appendTo(this.dropdown);
+		this.menu = $('<div>',{class:'dropdown-menu dropdown-menu-right'}).appendTo(this.dropdown);
 		for(var i=0;i<configObject.languages.length;i++){
 			var l = configObject.languages[i];
 			this.button = $('<a>',{class:'dropdown-item',lang:l.lang}).text('i18n:language_btn_'+l.lang).appendTo(this.menu);

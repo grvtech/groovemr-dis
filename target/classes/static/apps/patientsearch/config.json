@@ -1,0 +1,10 @@
+{
+		"container":".search",
+		"title":"Search patient",
+		"criteria":[
+			{"label":"RAMQ","value":"ramq","default":"0"},
+			{"label":"Chart Number","value":"chart","default":"0"},
+			{"label":"Index Patient","value":"qia","default":"1"},
+			{"label":"Full name","value":"lname_and_fname","default":"0"}
+		]
+}

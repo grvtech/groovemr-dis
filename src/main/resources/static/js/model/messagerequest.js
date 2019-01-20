@@ -1,10 +1,17 @@
 class GRVMessageRequest{
-	constructor(objectArray,encrypted=true){
+	constructor(objectArray,action,idsession,iduser,encrypted=true){
 		var result = {};
-		var elements = JSON.stringify(objectArray);
-		result['timestamp'] = '2018-09-24';
+		result['uuidsession'] = idsession;
+		result['action'] = action;
 		result['state']  = (encrypted)?'enc':'clear';
-		result['elements'] = (encrypted)?btoa(elements):elements;
+		Object.keys(objectArray).forEach(function(key) {
+			var k = key;
+			var v = objectArray[key];
+			console.log(key, objectArray[key]);
+			objectArray[key] = btoa(v);
+			console.log(key, objectArray[key]);
+		});
+		result['elements'] = objectArray;
 		return result;
 	}
 }

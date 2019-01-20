@@ -1,46 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<div th:replace="common/header ::common-header-css"/>
-	<div th:replace="common/header ::index-header-css"/>
+	<div th:replace="common/header ::common-header"/>
+	<div th:replace="common/header ::index-header"/>
 	
 </head>
 <body>
-
 <div th:replace="common/body :: index-template"/>
-<!-- 
-<p class="test1"></p>
-<div th:text="${user.uuidperson}"></div>
-
-
-<form autocomplete="off" th:action="@{/login}"  method="post" role="form" class="sky-form" enctype="utf8">
-        <header>Registration form</header>
-        <fieldset>
-            <section>
-                <label class="input">
-                    <i class="icon-append icon-user"></i>
-                    <input  type="text" placeholder="username" id="username" name="username"/>
-                    <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
-                </label>
-            </section>
-            
-            <section>
-                <label class="input">
-                    <i class="icon-append icon-user"></i>
-                    <input type="password" placeholder="password" id="password" name="password"/>
-                    <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
-                </label>
-            </section>
-            
-        </fieldset>
-        <footer>
-            <button id="btn-signup" type="submit" class="button">Login</button>
-        </footer>
-    </form>
- -->
-
 <div th:replace="common/footer :: index-footer-js"/>
 </body>
-
-
 </html>

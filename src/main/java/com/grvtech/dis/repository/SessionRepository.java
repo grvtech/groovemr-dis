@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.grvtech.dis.model.Session;
-import com.grvtech.dis.model.User;
 
 @Repository
 public class SessionRepository {
@@ -25,12 +24,12 @@ public class SessionRepository {
 		@Override
 		public Session mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Session session = new Session();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			new SimpleDateFormat("yyyyMMddHHmmss");
 			if (rs.isBeforeFirst()) {
-				session.setUuidsession((UUID)rs.getObject("uuidsession"));
+				session.setUuidsession((UUID) rs.getObject("uuidsession"));
 				session.setUuiduser(UUID.fromString(rs.getString("uuiduser")));
 				session.setStartsession(rs.getDate("startsession"));
-				session.setEndsession(rs.getDate("endsession"));
+				// session.setEndsession(rs.getDate("endsession"));
 			}
 			return session;
 		}
@@ -43,17 +42,16 @@ public class SessionRepository {
 	public List<Session> findAllActive() {
 		return jdbcTemplate.query("select * from session where endsession >= CURRENT_TIMESTAMP()", new SessionRowMapper());
 	}
-	
+
 	public Session findById(UUID sessionid) {
-		ArrayList<Session> sessions = (ArrayList<Session>) jdbcTemplate.query("select * from session where uuidsession='" + sessionid.toString() + "'",
-				new BeanPropertyRowMapper<Session>(Session.class));
+		ArrayList<Session> sessions = (ArrayList<Session>) jdbcTemplate.query("select * from session where uuidsession='" + sessionid.toString() + "'", new BeanPropertyRowMapper<Session>(
+				Session.class));
 		Session session = new Session();
 		if (sessions.size() > 0) {
 			session = sessions.get(0);
 		}
 		return session;
 	}
-
 
 	/* username and pin */
 	public List<Session> findByUser(UUID uuiduser) {
@@ -62,24 +60,13 @@ public class SessionRepository {
 		return sessions;
 	}
 
-
 	public int deleteById(UUID uuidsession) {
-		return jdbcTemplate.update("delete from session where uuidsession=?", new Object[] { uuidsession.toString() });
+		return jdbcTemplate.update("delete from session where uuidsession=?", new Object[]{uuidsession.toString()});
 	}
-	
-	
 
 	public int insert(Session session) {
-		return jdbcTemplate.update(
-				"insert into session (uuidsession,uuiduser,startsession,endsession) "
-						+ "values(?, ?, ?, ?)",
-				new Object[] { session.getUuidsession(), session.getUuiduser(), session.getStartsession(), session.getEndsession()});
-	}
-
-	public int update(Session session) {
-		return jdbcTemplate.update(
-				"update session " + " set endsession = ?",
-				new Object[] {session.getEndsession() });
+		return jdbcTemplate.update("insert into session (uuidsession,uuiduser,startsession) " + "values(?, ?, ?, ?)", new Object[]{session.getUuidsession(), session.getUuiduser(), session
+				.getStartsession()});
 	}
 
 }

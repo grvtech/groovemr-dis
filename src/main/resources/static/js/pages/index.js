@@ -1,6 +1,3 @@
-
-
-
 var loginConfig={
 	container:'.login',
 	loginTarget:'.login',
@@ -47,20 +44,20 @@ var loginConfig={
 
 
 
-fetchConfig("login",GRVLogin);
+//fetchConfig("login",GRVLogin);
 
 
 //var login = new GRVLogin(loginConfig);
 //var languageConfig = {"container":".language",languages : [{lang:"en"},{lang:"fr"},{lang:"ro"}]};
 //var language = new GRVLanguage(languageConfig);
-fetchConfig("language",GRVLanguage);
+//fetchConfig("language",GRVLanguage);
 
 //var frontpageConfig = {"container":".frontpage",elements:[{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"},{"text":"lorem ipsum lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum  lorem ipsum "},{"text":"<h1>bla bla bla</h1><p style='color:red'>text test</p><h1>bla bla bla</h1>"}]};
 //var frontpage = new GRVFrontPage(frontpageConfig);
-fetchConfig("frontpage",GRVFrontPage);
+//fetchConfig("frontpage",GRVFrontPage);
 
 
-
+initpage();
 
 
 /*

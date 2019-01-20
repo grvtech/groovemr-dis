@@ -3,19 +3,53 @@
 </head>
 <body>
 <div >
-    <div th:fragment="index-template" class="wrap">
-	    <div class="index-column index-col1">
-	    	<div class="grv-logo">GRooVEMR</div>
-	    	<div class="login"></div>
+    <div th:fragment="index-template" class="wrap index-page">
+	    <div class="grv-header"></div>
+	    <div class="grv-main ">
+		    <div class="coloana col1">
+		    	<div class="grv-logo">a</div>
+		    	<div class="login">a</div>
+		    </div>
+		    <div class="coloana col2">
+		    	<div class="grv-logo">&nbsp;aaa</div>
+		    	<div class="frontpage"></div>
+		    </div>
+		    <div class="coloana col3"></div>
 	    </div>
-	    <div class="index-column index-col2">
-	    	<div class="grv-logo">&nbsp;</div>
-		    <div class="frontpage"></div>
-	    </div>
-	    <div class="index-column index-col3"></div>
-		<div class="grvinfo"></div>
-		<div class="language"></div>
+	    <div class="grvinfo"></div>
+	    <div id="grv-frontpage"></div>
+	    <div id="grv-login"></div>
+		<div id="grv-info"></div>
     </div>
+    
+    <div th:fragment="user-template" class="wrap user-page">
+	    <div class="grv-header">
+	    	<div class="grv-linesbtn"><i class="fas fa-bars"></i></div>
+	    	<div class="grv-logo">a</div>
+	    	<div class="grv-search-aaa">search</div>
+	    	<div class="grv-topmenu"></div>
+	    	<div class="grv-pils">
+		    	<div class="pilbar">
+				  <div class="pil"><i class="fa fa-globe"></i><span class="button__badge">35</span></div>
+				  <div class="pil"><i class="fa fa-comments"></i><span class="button__badge">4</span></div>
+				</div>
+	    	</div> <!-- container for fills like messages notifications alerts -->
+	    	<div class="grv-settings"><i class="fas fa-cog"></i></div>
+	    </div>
+	    <div class="grv-main">
+	    	<div class='coloana'>
+	    		<!-- the template will control the view of the page manually for the moment -->
+	    		<!-- the position of apps in the page will be fixed for the moment -->
+    			<div class="search"></div>
+	    	</div>
+	    </div>
+	    <div id="grv-patientsearch"></div>
+    	<div id="grv-messenger"></div>
+    	<div id="grv-userstats"></div>
+		<div id="grv-info"></div>
+    </div>
+    
+    
 </div>
 </body>
 </html>

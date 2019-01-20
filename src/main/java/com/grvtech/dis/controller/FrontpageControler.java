@@ -14,7 +14,7 @@ public class FrontpageControler {
 	@Autowired
 	UserRepository repository;
 	@Autowired
-	//FrontpageService frontpageService;
+	// FrontpageService frontpageService;
 
 	@RequestMapping(value = {"/frontpage/get"}, method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -49,10 +49,10 @@ public class FrontpageControler {
 		 * restTemplate.getForObject("http://localhost:8080/user/2", //
 		 * User.class);
 		 */
-
+		System.out.println("aaaa");
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("index");
-		
+
 		return modelAndView;
 	}
 }

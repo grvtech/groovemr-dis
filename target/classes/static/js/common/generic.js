@@ -1,4 +1,4 @@
-function deployLanguage(){
+function deployLanguage(object){
 	var deployText = function(){
 		console.log('deploy text');
 		var t = $(this).text();
@@ -33,12 +33,42 @@ function deployLanguage(){
 	};
 	
 	if(languageObject){
-		$("[i18n]").each(deployAttribute);
-		$(":contains('i18n:'):not(:has(:contains('i18n:')))").each(deployText);
-		$("[value^='i18n:']").each(deployValue);
+		if(object  && typeof(object) == "element"){
+			$(object).find("[i18n]").each(deployAttribute);
+			$(object).find(":contains('i18n:'):not(:has(:contains('i18n:')))").each(deployText);
+			$(object).find("[value^='i18n:']").each(deployValue);
+		}else{
+			$("[i18n]").each(deployAttribute);
+			$(":contains('i18n:'):not(:has(:contains('i18n:')))").each(deployText);
+			$("[value^='i18n:']").each(deployValue);
+		}
+		
 	}
 	
 }
+
+function localiseObject(object){
+	if(object && typeof(object) != "undefined"){
+		if(typeof(object) == "object" || typeof(object) == "array"){
+			$.each(object, function(index, value){
+				//console.log(index+"    "+typeof(value));
+				if(typeof(value) == "object" || typeof(value) == "array"){
+					object[index] = localiseObject(value);
+				}else{
+					object[index] = getTag(value);
+				}
+				
+			});
+			console.log(object);
+			return object;
+		}else{
+			console.log(typeof(object));
+			return getTag(object);
+		}
+		
+	}else return null;
+}
+
 
 function loadLanguage(lang){
 	console.log('execute loadlanguage '+new Date());
@@ -53,12 +83,16 @@ function loadLanguage(lang){
 	  })
 }
 
-function getTag(tag){
-	//console.log('execute getTag '+new Date());
-	//console.log('tag:'+pageName+'_'+tag);
-	var result = pageLanguage+'.'+pageName+'_'+tag;
-	if(languageObject != null){
-		result = eval('languageObject.'+pageLanguage+'.'+pageName+'_'+tag);
+function getTag(t){
+	var result = t;
+	if(typeof(t) == "string"){
+		if(t.indexOf('i18n:') >= 0){
+			var tag = t.substring(5,t.length);
+			result = pageLanguage+'.'+tag;
+			if(languageObject != null){
+				result = eval('languageObject.'+pageLanguage+'.'+tag);
+			}
+		}
 	}
 	return result;
 }
@@ -102,18 +136,60 @@ function fetchData(url,dataArray, callback){
 } 
 
 
-
-
 function fetchConfig(configName,callback){
-	var jqxhr = $.getJSON( "js/config/"+configName+".json", function(object) {
+	var jqxhr = $.getJSON( "/apps/"+configName+"/config.json", function(object) {
 		if (callback && typeof(callback) === "function") {
 			callback(object);
 	    }
-		console.log( "success load config file" );
 	}).fail(function(xhr, textStatus, errorThrown) {
-	    console.log( "error loading language object" );
+	    console.log( "error loading config object "+configName );
 	    console.log(errorThrown);
 	})
 }
+
+/*this function is called to load the configs on the page based on the template
+ * the function scans 2 elements in the page grv-core and grv-apps and loads the apps in those containers
+ * 
+ * */
+function initpage(){
+	$('div[id^="grv-"]').each(function(index,obj){
+		var objName = $(obj).attr('id').substring(4);
+		fetchConfig(objName,eval('GRV'+objName));
+	});
+	//deployLanguage();
+}
+
+
+
+function storageAvailable(type) {
+    try {
+        var storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage.length !== 0;
+    }
+}
+
+
+//Second Approach.
+function isItemExist(name) {
+  return (name in sessionStorage);
+}
+
 
 
