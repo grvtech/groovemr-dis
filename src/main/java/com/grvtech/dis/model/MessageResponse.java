@@ -130,6 +130,7 @@ public class MessageResponse {
 		this.status = status;
 		this.elements = elements;
 	}
+
 	/**
 	 * @return the uuidsession
 	 */

@@ -56,17 +56,30 @@ public class GRVRestClient {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<MessageResponse> respEntity = restTemplate.exchange(url, HttpMethod.POST, entity, MessageResponse.class);
 		result = respEntity.getBody();
+
+		System.out.println("--------------------------------------------");
+		System.out.println("----response : " + result.getElements());
+		System.out.println("----response : " + result.getAction());
+		System.out.println("----response : " + result.getStatus());
+		System.out.println("----response : " + result.getUuidsession());
+		System.out.println("--------------------------------------------");
+
 		return result;
 	}
 
 	public MessageResponse clear(MessageResponse mres) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException,
 			UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, IOException {
 		MessageResponse result = mres;
+
 		ObjectNode ob = mres.getElements();
+
 		Iterator<String> fields = ob.fieldNames();
 		while (fields.hasNext()) {
 			String field = fields.next();
 			String scramble = ob.get(field).asText();
+			System.out.println("-----------------------------------");
+			System.out.println("-field :" + field + "   - scramble : " + scramble + "    - action :" + mres.getAction());
+			System.out.println("-----------------------------------");
 			if (mres.getUuidsession().toString().equals("00000000-0000-0000-0000-000000000000")) {
 				ob.put(field, CryptoUtil.decrypt(mres.getAction(), scramble));
 			} else {

@@ -6,6 +6,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import javax.annotation.PreDestroy;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -34,4 +35,10 @@ public class DisConfig {
 		}
 		return licence;
 	}
+
+	@PreDestroy
+	public void onShutDown() {
+		System.out.println("closing application context..let's do the final resource cleanup");
+	}
+
 }

@@ -11,7 +11,7 @@ if(pageName == 'index'){
 		}
 	}
 	else {
-	  // Too bad, no localStorage for us
+	// Too bad, no localStorage for us
 		console.log("no local storage");
 	}
 }

@@ -5,6 +5,7 @@
 	"forgotTarget": ".frontpage",
 	"actions":{
 		"login":"/login/lup.grvemr",
+		"loginsuccess":"/user",
 		"subscribe":"/login/sub.grvemr",
 		"forgot":"/login/fup.grvemr"
 	},

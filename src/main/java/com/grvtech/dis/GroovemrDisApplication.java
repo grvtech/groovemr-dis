@@ -2,8 +2,10 @@ package com.grvtech.dis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -27,6 +29,32 @@ public class GroovemrDisApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(GroovemrDisApplication.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(GroovemrDisApplication.class, args);
+		String license = ctx.getBean("license").toString().replaceAll("\"", "");
+		System.out.println("------------------------------------------------------");
+		System.out.println("licence is " + ctx.getBean("license"));
+		System.out.println("------------------------------------------------------");
+
+		if (license.equals("")) {
+			System.out.println("------------------------------------------------------");
+			System.out.println("licence is empty");
+			System.out.println("------------------------------------------------------");
+			exitApplication(ctx);
+
+		}
+
 	}
+
+	public static void exitApplication(ConfigurableApplicationContext ctx) {
+		int exitCode = SpringApplication.exit(ctx, new ExitCodeGenerator() {
+			@Override
+			public int getExitCode() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+		});
+
+		System.exit(exitCode);
+	}
+
 }

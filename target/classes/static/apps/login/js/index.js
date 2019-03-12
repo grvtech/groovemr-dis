@@ -33,7 +33,10 @@ function GRVlogin(object){
 						login['timestamp'] = moment().format('YYYY-MM-DD HH:mm:ss');
 						login['user'] = mresp.elements.uuiduser;
 						login['session'] = mresp.elements.uuidsession;
-						sessionStorage.setItem('loginObject',login);
+						
+						options['login'] = login;
+						options['next'] = object.actions.loginsuccess;
+						options['prev'] = '/index';
 					}
 					else {
 					  // Too bad, no localStorage for us
@@ -43,7 +46,7 @@ function GRVlogin(object){
 				options.complete();
 			});
 		},onComplete:function(survey,options){
-			//window.location = "/user";
+			gtu(options);
 		}});
 			
 		this.subscribeWidget = $('<div>',{class:'grv-widget grv-subscribe',id:'subscribeWidget'}).appendTo(this.loginContainer);
